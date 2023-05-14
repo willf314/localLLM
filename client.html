@@ -58,7 +58,7 @@
         margin-bottom: 30px;				
       }
 	  
-      button {
+    .btn-group button {
         display: inline-block;
 		width: 150px;
 		padding: 10px 20px;
@@ -70,12 +70,14 @@
 		cursor: pointer;
 		transition: background-color 0.3s ease;
 		margin-left: auto;
-		margin-right: 0px;
-      }
-      button:hover {
-        background-color: #4169E1;
-      }
-	  
+		margin-right: 10px;
+		float: right; /* Float the buttons side by side */
+    }
+      	 
+	.btn-group button:not(:last-child) {
+		border-right: none; /* Prevent double borders */
+	}
+	  	
 	.spinner {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
@@ -94,9 +96,10 @@
 		100% { transform: rotate(360deg); }
 	}
 	
-	#submit-btn:disabled {
+	#submit-btn:disabled, #submit-btn-async:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
+		
 }
 
     </style>
@@ -106,10 +109,15 @@
       <h1>Test Client for Local LLM Service</h1>
       <label for="question">Enter your question:</label>
       <textarea id="question" name="question" placeholder="Enter your question here..."></textarea>
-      <button id="submit-btn" onclick="sendQuestion()" disabled>Sync Submit</button>
-      <div class="spinner" style="display:none;"></div>
+      <div class="btn-group">
+		<button id="submit-btn" onclick="sendQuestion()" disabled>Submit(Sync)</button>
+		<button id="submit-btn-async" disabled>Submit(Async)</button>
+      </div>
+	  <div class="spinner" style="display:none;"></div>
 	  <label for="answer">Answer:</label>
       <textarea id="answer" rows="5" placeholder="Answer will appear here..."readonly></textarea>
+	  <label for="rawresponse">JSON payload:</label>
+      <textarea id="rawresponse" rows="10" placeholder="JSON response will appear here..."readonly></textarea>
     </div>
     <script>
       function sendQuestion() {
@@ -120,12 +128,13 @@
 		$("#answer").val("");
         $.ajax({
           type: "POST",
-          url: "http://127.0.0.1:8000/model",
+          url: "http://127.0.0.1:8000/model/queryLLM",
           data: JSON.stringify(data),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function(response) {
             $("#answer").val(response.answer);
+			$("#rawresponse").val(JSON.stringify(response));
 			$("#submit-btn").prop("disabled", false); // Enable the submit button
 			$(".spinner").hide(); // Hide the loading spinner
           },

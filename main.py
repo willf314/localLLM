@@ -32,47 +32,63 @@ app.add_middleware(
 class Question(BaseModel):
     question: str
 
-# question/answer endpoint 
-@app.post("/model/")
+# question/answer endpoint - synchronous - blocks until LLM returns full result
+@app.post("/model/queryLLM")
 async def get_answer(question: Question):
-  stream = llm(
+    #call LLM
+    stream = llm(
         "Question:" + question.question + " Answer:",
         max_tokens=200,
         stop=["\n", " Q:", " Question:"],
         echo=False,
         )
-  result = copy.deepcopy(stream)  
-  text = result["choices"][0]["text"]
-  #usage = result["usage"]
-  print(text)
-  return {"answer" : text}
-
-
-
-
-#async def model(request: Request, question: dict = Body(...)):
-#    stream = llm(
-#        f"Question: {question['text']} Answer:",
-#        max_tokens=100,
-#        stop=["\n", " Q:"],
-#        stream=True,
-#        )
     
-#    async def async_generator():
-#        for item in stream:
-#            yield item
+    #retrieve answer + supporting data from the LLM result
+    result = copy.deepcopy(stream)  
+    text = result["choices"][0]["text"]
+    id = result["id"]
+    object = result["object"]
+    created = result["created"]
+    modelName = result["model"]
+    prompt_tokens = result["usage"]["prompt_tokens"]
+    completion_tokens = result["usage"]["completion_tokens"]
+    total_tokens = result["usage"]["total_tokens"]
+
+    #log raw result to console
+    print(result)
+    
+    #return result to client
+    return {"question" : question.question, "answer" : text, "id" : id, "object" : object,
+           "created" : created, "modelName" : modelName, 
+           "prompt_tokens" : prompt_tokens, "completion_tokens" : completion_tokens,
+           "total_tokens" : total_tokens}
+
+
+@app.post("/model/queryLLMasync/")
+
+async def model(request: Request, question: dict = Body(...)):
+    stream = llm(
+        f"Question: {question['text']} Answer:",
+        max_tokens=200,
+        stop=["\n", " Q:", "Question:"],
+        stream=True,
+        )
+    
+    async def async_generator():
+        for item in stream:
+            yield item
             
-#    async def server_sent_events():
-#        async for item in async_generator():
-#            if await request.is_disconnected():
-#                break
+    async def server_sent_events():
+        async for item in async_generator():
+            if await request.is_disconnected():
+                break
 
-#            result = copy.deepcopy(item)
-#            text = result["choices"][0]["text"]
+            result = copy.deepcopy(item)
+            text = result["choices"][0]["text"]
 
-#            yield {"data": text}
+            yield {"data": text}
 
-#    return EventSourceResponse(server_sent_events())
+    return EventSourceResponse(server_sent_events())
 
 
 
