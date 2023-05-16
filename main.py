@@ -1,5 +1,3 @@
-##https://www.youtube.com/watch?v=-BidzsQYZM4
-##https://www.youtube.com/watch?v=ITV1wv5HiX4
 
 import json
 import copy 
