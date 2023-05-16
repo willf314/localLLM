@@ -6,7 +6,7 @@ import copy
 from llama_cpp import Llama
 import asyncio
 import requests
-from fastapi import FastAPI, Request, Body
+from fastapi import FastAPI, Request
 from sse_starlette import EventSourceResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel 
@@ -32,12 +32,14 @@ app.add_middleware(
 class Question(BaseModel):
     question: str
 
+
+
 # question/answer endpoint - synchronous - blocks until LLM returns full result
 @app.post("/model/queryLLM")
 async def get_answer(question: Question):
     #call LLM
-    stream = llm(
-        "Question:" + question.question + " Answer:",
+    stream = llm(        
+        f"Question:{question.question} Answer:",
         max_tokens=200,
         stop=["\n", " Q:", " Question:"],
         echo=False,
@@ -64,30 +66,46 @@ async def get_answer(question: Question):
            "total_tokens" : total_tokens}
 
 
-@app.post("/model/queryLLMasync/")
+# question/answer endpoint - asynchronous 
 
-async def model(request: Request, question: dict = Body(...)):
+#global stream
+stream = None
+
+#global function
+async def async_generator():
+        for item in stream:
+            yield item
+
+
+@app.post("/model/queryLLMasync")
+async def get_answer_async(question: Question):                
+    #call LLM    
+    print("running async query:" + str(question.question) + "\n")
+    global stream
     stream = llm(
-        f"Question: {question['text']} Answer:",
+        f"Question:{question.question} Answer:",
         max_tokens=200,
         stop=["\n", " Q:", "Question:"],
         stream=True,
         )
-    
-    async def async_generator():
-        for item in stream:
-            yield item
-            
+        
+    return {}
+
+# stream back LLM response to client
+@app.get("/model/asyncevents")
+async def stream_answer(request: Request):
+    global stream 
+        
     async def server_sent_events():
         async for item in async_generator():
             if await request.is_disconnected():
                 break
 
             result = copy.deepcopy(item)
-            text = result["choices"][0]["text"]
-
+            text = result["choices"][0]["text"]           
+            print(text + "\n")
             yield {"data": text}
-
+            
     return EventSourceResponse(server_sent_events())
 
 

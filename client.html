@@ -111,7 +111,7 @@
       <textarea id="question" name="question" placeholder="Enter your question here..."></textarea>
       <div class="btn-group">
 		<button id="submit-btn" onclick="sendQuestion()" disabled>Submit(Sync)</button>
-		<button id="submit-btn-async" disabled>Submit(Async)</button>
+		<button id="submit-btn-async" onclick="sendQuestionAsync()" disabled>Submit(Async)</button>
       </div>
 	  <div class="spinner" style="display:none;"></div>
 	  <label for="answer">Answer:</label>
@@ -121,11 +121,14 @@
     </div>
     <script>
       function sendQuestion() {
-        var question = $("#question").val();
+        closeConnection();	//make sure any streaming event connection currently running is closed
+		var question = $("#question").val();
         var data = { "question": question };
-		$("#submit-btn").prop("disabled", true); // Disable the submit button
+		$("#submit-btn").prop("disabled", true); // Disable the submit buttons
+		$("#submit-btn-async").prop("disabled", true);
 		$(".spinner").show(); // Show the loading spinner
-		$("#answer").val("");
+		$("#answer").val(""); // clear answer text area
+		$("#rawresponse").val(""); //clear raw response text area
         $.ajax({
           type: "POST",
           url: "http://127.0.0.1:8000/model/queryLLM",
@@ -135,23 +138,91 @@
           success: function(response) {
             $("#answer").val(response.answer);
 			$("#rawresponse").val(JSON.stringify(response));
-			$("#submit-btn").prop("disabled", false); // Enable the submit button
+			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			$("#submit-btn-async").prop("disabled", false); 
 			$(".spinner").hide(); // Hide the loading spinner
           },
           error: function(xhr, status, error) {
             alert("Error: " + error);
-			$("#submit-btn").prop("disabled", false); // Enable the submit button
+			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			$("#submit-btn-async").prop("disabled", false);
 			$(".spinner").hide(); // Hide the loading spinner
           }
         });
       }
-	  
+	
+	// setup event handlers to receive answer stream from server
+	let eventSource;
+	let connectionInProgress = false;
+	
+	const handleMessageEvent = (event) => {
+			const text = event.data;
+			const textsofar = $("#answer").val();
+			const newtext = textsofar + text;
+			$("#answer").val(newtext);
+			};
+	
+	const handleCloseEvent = (event) => {		
+			closeConnection();
+		};
+			
+	function establishConnection()
+	{
+		eventSource = new EventSource("http://127.0.0.1:8000/model/asyncevents");		
+		eventSource.addEventListener("message", handleMessageEvent);
+		eventSource.addEventListener("error", handleCloseEvent);
+		connectionInProgress = true;
+	}
+	
+	function closeConnection()
+	{
+		if (connectionInProgress == true)
+		{			
+			eventSource.close();		
+			connectionInProgress = false;
+		}		
+	}
+		
+	function sendQuestionAsync() {		
+	    closeConnection();	//make sure any streaming event connection currently running is closed
+		var question = $("#question").val();
+        var data = { "question": question };
+		$("#submit-btn").prop("disabled", true); // Disable the submit buttons
+		$("#submit-btn-async").prop("disabled", true);
+		$(".spinner").show(); // Show the loading spinner
+		$("#answer").val(""); // clear answer text area
+		$("#rawresponse").val(""); //clear raw response text area
+        $.ajax({
+          type: "POST",
+          url: "http://127.0.0.1:8000/model/queryLLMasync",
+          data: JSON.stringify(data),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(response) {
+            establishConnection();
+														
+			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			$("#submit-btn-async").prop("disabled", false); 
+			$(".spinner").hide(); // Hide the loading spinner
+          },
+          error: function(xhr, status, error) {
+            alert("Error: " + error);
+			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			$("#submit-btn-async").prop("disabled", false);
+			$(".spinner").hide(); // Hide the loading spinner
+          }
+        });
+	}
+
+	  	  			  	 	 
 	  $("#question").on("input", function() {
       var question = $(this).val();
       if (question.trim().length > 0) {
         $("#submit-btn").prop("disabled", false);
+		$("#submit-btn-async").prop("disabled", false);		
       } else {
         $("#submit-btn").prop("disabled", true);
+		$("#submit-btn-async").prop("disabled", true);
       }
     });
     </script>

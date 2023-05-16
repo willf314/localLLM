@@ -1,0 +1,82 @@
+Client side java script:
+
+function startEventGeneration() {
+  const question = 'Your question goes here';
+
+  fetch('/start-events/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ question }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.message);
+      startEventSource();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function startEventSource() {
+  const eventSource = new EventSource('/stream-events/');
+
+  eventSource.addEventListener('message', function(event) {
+    const text = event.data;
+    console.log('Received event:', text);
+
+    // Append the received text to the answer field
+    const answerField = document.getElementById('answer');
+    answerField.value += text;
+  });
+
+  eventSource.onerror = function() {
+    console.error('Error establishing connection to server-sent events');
+  };
+}
+
+Server side code
+
+from fastapi import FastAPI, BackgroundTasks, Request
+from fastapi.responses import JSONResponse
+from fastapi.responses import EventSourceResponse
+
+app = FastAPI()
+
+# List to store the generated events
+events = []
+
+@app.post("/start-events/")
+async def start_events(request: Request, background_tasks: BackgroundTasks):
+    try:
+        data = await request.json()
+        question = data.get("question")
+        
+        # Validate question if needed
+
+        # Clear the events list before starting
+        events.clear()
+
+        # Run the background task to generate events
+        background_tasks.add_task(generate_events, question)
+
+        return {"message": "Event generation started"}
+    except Exception as e:
+        return JSONResponse(status_code=400, content={"error": str(e)})
+
+async def generate_events(question):
+    # Your logic to generate events goes here
+    # Use the provided question parameter to generate events
+    for i in range(5):
+        event = f"Event {i+1} for question: {question}"
+        events.append(event)
+
+@app.get("/stream-events/")
+async def stream_events():
+    async def event_generator():
+        for event in events:
+            yield f"data: {event}\n\n"
+
+    return EventSourceResponse(event_generator(), media_type="text/event-stream")
