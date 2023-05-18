@@ -11,7 +11,7 @@ from pydantic import BaseModel
 
 ## load the model
 print("Loading model...")
-llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin")   
+llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=True, n_ctx = 4096)   
 print("Model loaded")
 
 app = FastAPI()
@@ -27,19 +27,21 @@ app.add_middleware(
 )
 
 #define the request body schema
-class Question(BaseModel):
-    question: str
-
-
+class LLMRequest(BaseModel):
+    text: str
 
 # question/answer endpoint - synchronous - blocks until LLM returns full result
-@app.post("/model/queryLLM")
-async def get_answer(question: Question):
+@app.post("/model/query")
+async def get_answer(request: LLMRequest):
+    
+    print("running sync query:" + str(request.text) + "\n")
+
     #call LLM
     stream = llm(        
-        f"Question:{question.question} Answer:",
-        max_tokens=200,
-        stop=["\n", " Q:", " Question:"],
+        #f"Question:{request.text} Answer:",
+        request.text,
+        max_tokens=2048,
+        stop=[ " Q:", " Question:"],
         echo=False,
         )
     
@@ -58,10 +60,20 @@ async def get_answer(question: Question):
     print(result)
     
     #return result to client
-    return {"question" : question.question, "answer" : text, "id" : id, "object" : object,
+    return {"question" : request.text , "answer" : text, "id" : id, "object" : object,
            "created" : created, "modelName" : modelName, 
            "prompt_tokens" : prompt_tokens, "completion_tokens" : completion_tokens,
            "total_tokens" : total_tokens}
+
+# API to create embeddings from a text string
+@app.post("/model/getembedding")
+async def get_embedding(request: LLMRequest):
+    print("embedding request:")
+    print(request.text)    
+    embeddings = llm.embed(request.text)
+    
+    #return result
+    return {"embeddings" : embeddings}
 
 
 # question/answer endpoint - asynchronous 
@@ -74,23 +86,23 @@ async def async_generator():
         for item in stream:
             yield item
 
-
-@app.post("/model/queryLLMasync")
-async def get_answer_async(question: Question):                
+@app.post("/model/queryasync")
+async def get_answer_async(request: LLMRequest):                
     #call LLM    
-    print("running async query:" + str(question.question) + "\n")
+    print("running async query:" + str(request.text) + "\n")
     global stream
     stream = llm(
-        f"Question:{question.question} Answer:",
-        max_tokens=200,
-        stop=["\n", " Q:", "Question:"],
+        #f"Question:{request.text} Answer:",
+        request.text,
+        max_tokens=2048,
+        stop=[ " Q:", "Question:"],
         stream=True,
         )
         
     return {}
 
 # stream back LLM response to client
-@app.get("/model/asyncevents")
+@app.get("/model/answerstream")
 async def stream_answer(request: Request):
     global stream 
         
@@ -100,11 +112,12 @@ async def stream_answer(request: Request):
                 break
 
             result = copy.deepcopy(item)
-            text = result["choices"][0]["text"]           
-            print(text + "\n")
+            text = result["choices"][0]["text"]                       
             yield {"data": text}
             
     return EventSourceResponse(server_sent_events())
+
+
 
 
 
