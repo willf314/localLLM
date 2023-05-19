@@ -133,7 +133,7 @@
 		$("#rawresponse").val(""); //clear raw response text area
         $.ajax({
           type: "POST",
-          url: "http://127.0.0.1:8000/model/query",
+          url: "http://localhost:8000/query",
           data: JSON.stringify(data),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
@@ -172,7 +172,7 @@
 			
 	function establishConnection()
 	{
-		eventSource = new EventSource("http://127.0.0.1:8000/model/answerstream");		
+		eventSource = new EventSource("http://localhost:8000/stream-answer");		
 		eventSource.addEventListener("message", handleMessageEvent);
 		eventSource.addEventListener("error", handleCloseEvent);
 		connectionInProgress = true;
@@ -199,7 +199,7 @@
 		$("#rawresponse").val(""); //clear raw response text area
         $.ajax({
           type: "POST",
-          url: "http://127.0.0.1:8000/model/queryasync",
+          url: "http://localhost:8000/query-async",
           data: JSON.stringify(data),
           contentType: "application/json; charset=utf-8",
           dataType: "json",
@@ -233,7 +233,7 @@
         $("#rawresponse").val(""); //clear raw response text area
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:8000/model/getembedding",
+            url: "http://localhost:8000/get-embedding",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
