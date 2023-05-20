@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Local LLM Service Test</title>
+    <title>LLM Test Client</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
 	   body {
@@ -23,7 +23,7 @@
         color: #333;
       }
       
-	  textarea {
+	  textarea, input {
         display: block;
         width: calc(100% - 10px);
         padding: 10px;
@@ -43,7 +43,7 @@
         font-style: italic;
       }
 	  
-      textarea:focus {
+      textarea:focus, input {
         outline: none;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
       }
@@ -58,6 +58,11 @@
         margin-bottom: 30px;				
       }
 	  
+      input {
+          height: 50px;
+          margin-bottom: 20px;
+      }
+
     .btn-group button {
         display: inline-block;
 		width: 150px;
@@ -74,10 +79,30 @@
 		float: right; /* Float the buttons side by side */
     }
       	 
-	.btn-group button:not(:last-child) {
+	.btn-group, button:not(:last-child) {
 		border-right: none; /* Prevent double borders */
 	}
-	  	
+
+    .ingest-btn-group button {
+        display: inline-block;
+        width: 150px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #6495ED;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: auto;
+        margin-right: 10px;
+        float: right; /* Float the buttons side by side */
+    }
+
+    .ingest-btn-group, button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+    }
+
 	.spinner {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
@@ -95,33 +120,41 @@
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
 	}
-	
-	#submit-btn:disabled, #submit-btn-async:disabled, #embed-btn:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
-		
-}
+
+        #submit-btn:disabled, #submit-btn-async:disabled, #embed-btn:disabled, #ingestFile-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
     </style>
   </head>
   <body>
-     <div id="container">
-      <h1>Test Client for Local LLM Service</h1>
-      <label for="question">Enter your question:</label>
-      <textarea id="question" name="question" placeholder="Enter your question here..."></textarea>
-	  <div class="btn-group">		
-		<button id="submit-btn" onclick="sendQuestion()" disabled>Query(Sync)</button>
-	  	<button id="submit-btn-async" onclick="sendQuestionAsync()" disabled>Query(Async)</button>
-		<button id="embed-btn" onclick="sendEmbedRequest()" disabled>Embed Text</button>
-	  </div>
-	  <div class="spinner" style="display:none;"></div>
-	  <label for="answer">Answer:</label>
-      <textarea id="answer" rows="5" placeholder="Answer will appear here..."readonly></textarea>
-	  <label for="rawresponse">JSON payload:</label>
-      <textarea id="rawresponse" rows="10" placeholder="JSON response will appear here..."readonly></textarea>
-    </div>
+      <div id="container">
+          <h1>Control Service</h1>
+          <label for="Ingest Document">Select document to ingest:</label>
+          <input type="file" id="fileInput" style="display: none;">
+          <input type="text" id="fileNameTextBox" readonly>
+          <div class="ingest-btn-group">
+              <button id="selectFile-btn">Select File</button>
+              <button id="ingestFile-btn" onClick="ingestPDFFile()" disabled>Ingest File</button>
+          </div>
+          <h1>Embedding LLM</h1>
+          <label for="question">Enter your question:</label>
+          <textarea id="question" name="question" placeholder="Enter your question here..."></textarea>
+          <div class="btn-group">
+              <button id="submit-btn" onclick="sendQuestion()" disabled>Query(Sync)</button>
+              <button id="submit-btn-async" onclick="sendQuestionAsync()" disabled>Query(Async)</button>
+              <button id="embed-btn" onclick="sendEmbedRequest()" disabled>Embed Text</button>
+          </div>
+          <div class="spinner" style="display:none;"></div>
+          <label for="answer">Answer:</label>
+          <textarea id="answer" rows="5" placeholder="Answer will appear here..." readonly></textarea>
+          <label for="rawresponse">JSON payload:</label>
+          <textarea id="rawresponse" rows="10" placeholder="JSON response will appear here..." readonly></textarea>
+          <h1>Query LLM</h1>
+      </div>
     <script>
-      function sendQuestion() {
+        function sendQuestion() {
         closeConnection();	//make sure any streaming event connection currently running is closed
 		var question = $("#question").val();
         var data = { "text": question };
@@ -132,143 +165,216 @@
 		$("#answer").val(""); // clear answer text area
 		$("#rawresponse").val(""); //clear raw response text area
         $.ajax({
-          type: "POST",
-          url: "http://localhost:8000/query",
-          data: JSON.stringify(data),
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(response) {
+            type: "POST",
+            url: "http://localhost:8000/query",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
             $("#answer").val(response.answer);
 			$("#rawresponse").val(JSON.stringify(response));
 			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
 			$("#submit-btn-async").prop("disabled", false);
             $("#embed-btn").prop("disabled", false);
 			$(".spinner").hide(); // Hide the loading spinner
-          },
-          error: function(xhr, status, error) {
-            alert("Error: " + error);
-			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			$("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
-			$(".spinner").hide(); // Hide the loading spinner
-          }
-        });
-      }
-	
-	// setup event handlers to receive answer stream from server
-	let eventSource;
-	let connectionInProgress = false;
-	
-	const handleMessageEvent = (event) => {
-			const text = event.data;
-			const textsofar = $("#answer").val();
-			const newtext = textsofar + text;
-			$("#answer").val(newtext);
-			};
-	
-	const handleCloseEvent = (event) => {		
-			closeConnection();
-		};
-			
-	function establishConnection()
-	{
-		eventSource = new EventSource("http://localhost:8000/stream-answer");		
-		eventSource.addEventListener("message", handleMessageEvent);
-		eventSource.addEventListener("error", handleCloseEvent);
-		connectionInProgress = true;
-	}
-	
-	function closeConnection()
-	{
-		if (connectionInProgress == true)
-		{			
-			eventSource.close();		
-			connectionInProgress = false;
-		}		
-	}
-		
-	function sendQuestionAsync() {		
-	    closeConnection();	//make sure any streaming event connection currently running is closed
-		var question = $("#question").val();
-        var data = { "text": question };
-		$("#submit-btn").prop("disabled", true); // Disable the submit buttons
-		$("#submit-btn-async").prop("disabled", true);
-        $("#embed-btn").prop("disabled", true);
-		$(".spinner").show(); // Show the loading spinner
-		$("#answer").val(""); // clear answer text area
-		$("#rawresponse").val(""); //clear raw response text area
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:8000/query-async",
-          data: JSON.stringify(data),
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function(response) {
-            establishConnection();
-														
-			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			$("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
-			$(".spinner").hide(); // Hide the loading spinner
-          },
-          error: function(xhr, status, error) {
-            alert("Error: " + error);
-			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			$("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
-			$(".spinner").hide(); // Hide the loading spinner
-          }
-        });
-	}
-
-    function sendEmbedRequest() {
-        closeConnection();	//make sure any streaming event connection currently running is closed
-        var question = $("#question").val();
-        var data = { "text": question };
-        $("#submit-btn").prop("disabled", true); // Disable the submit buttons
-        $("#submit-btn-async").prop("disabled", true);
-        $("#embed-btn").prop("disabled", true);
-        $(".spinner").show(); // Show the loading spinner
-        $("#answer").val(""); // clear answer text area
-        $("#rawresponse").val(""); //clear raw response text area
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8000/get-embedding",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {                
-                $("#rawresponse").val(JSON.stringify(response));
-                $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                $("#submit-btn-async").prop("disabled", false);
-                $("#embed-btn").prop("disabled", false);
-                $(".spinner").hide(); // Hide the loading spinner
             },
-            error: function (xhr, status, error) {
-                alert("Error: " + error);
-                $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                $("#submit-btn-async").prop("disabled", false);
-                $("#embed-btn").prop("disabled", false);
-                $(".spinner").hide(); // Hide the loading spinner
+            error: function(xhr, status, error) {
+            alert("Error: " + error);
+			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			$("#submit-btn-async").prop("disabled", false);
+            $("#embed-btn").prop("disabled", false);
+			$(".spinner").hide(); // Hide the loading spinner
             }
         });
-    }
-	  	  			  	 	 
-    $("#question").on("input", function ()
-    {
-        var question = $(this).val();
-        if (question.trim().length > 0)
-        {
-            $("#submit-btn").prop("disabled", false);
-            $("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
-        } else
-        {
-            $("#submit-btn").prop("disabled", true);
+        }
+	
+	    // setup event handlers to receive answer stream from server
+	    let eventSource;
+	    let connectionInProgress = false;
+	
+	    const handleMessageEvent = (event) => {
+			    const text = event.data;
+			    const textsofar = $("#answer").val();
+			    const newtext = textsofar + text;
+			    $("#answer").val(newtext);
+			    };
+	
+	    const handleCloseEvent = (event) => {		
+			    closeConnection();
+		    };
+			
+	    function establishConnection()
+	    {
+		    eventSource = new EventSource("http://localhost:8000/stream-answer");		
+		    eventSource.addEventListener("message", handleMessageEvent);
+		    eventSource.addEventListener("error", handleCloseEvent);
+		    connectionInProgress = true;
+	    }
+	
+	    function closeConnection()
+	    {
+		    if (connectionInProgress == true)
+		    {			
+			    eventSource.close();		
+			    connectionInProgress = false;
+		    }		
+	    }
+		
+	    function sendQuestionAsync() {		
+	        closeConnection();	//make sure any streaming event connection currently running is closed
+		    var question = $("#question").val();
+            var data = { "text": question };
+		    $("#submit-btn").prop("disabled", true); // Disable the submit buttons
+		    $("#submit-btn-async").prop("disabled", true);
+            $("#embed-btn").prop("disabled", true);
+		    $(".spinner").show(); // Show the loading spinner
+		    $("#answer").val(""); // clear answer text area
+		    $("#rawresponse").val(""); //clear raw response text area
+            $.ajax({
+              type: "POST",
+              url: "http://localhost:8000/query-async",
+              data: JSON.stringify(data),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function(response) {
+                establishConnection();
+														
+			    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			    $("#submit-btn-async").prop("disabled", false);
+                $("#embed-btn").prop("disabled", false);
+			    $(".spinner").hide(); // Hide the loading spinner
+              },
+              error: function(xhr, status, error) {
+                alert("Error: " + error);
+			    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+			    $("#submit-btn-async").prop("disabled", false);
+                $("#embed-btn").prop("disabled", false);
+			    $(".spinner").hide(); // Hide the loading spinner
+              }
+            });
+	    }
+
+        function sendEmbedRequest() {
+            closeConnection();	//make sure any streaming event connection currently running is closed
+            var question = $("#question").val();
+            var data = { "text": question };
+            $("#submit-btn").prop("disabled", true); // Disable the submit buttons
             $("#submit-btn-async").prop("disabled", true);
             $("#embed-btn").prop("disabled", true);
+            $(".spinner").show(); // Show the loading spinner
+            $("#answer").val(""); // clear answer text area
+            $("#rawresponse").val(""); //clear raw response text area
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8000/get-embedding",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {                
+                    $("#rawresponse").val(JSON.stringify(response));
+                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+                    $("#submit-btn-async").prop("disabled", false);
+                    $("#embed-btn").prop("disabled", false);
+                    $(".spinner").hide(); // Hide the loading spinner
+                },
+                error: function (xhr, status, error) {
+                    alert("Error: " + error);
+                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+                    $("#submit-btn-async").prop("disabled", false);
+                    $("#embed-btn").prop("disabled", false);
+                    $(".spinner").hide(); // Hide the loading spinner
+                }
+            });
         }
-    });
+
+        // constants for ingest file functions and event handlers
+        const fileInput = document.getElementById('fileInput');
+        const fileNameTextBox = document.getElementById('fileNameTextBox');
+        const customButton = document.getElementById('selectFile-btn');
+        const ingestFileBtn = document.getElementById('ingestFile-btn');
+        let selectedFile;
+
+        // function to send PDF file to web service 
+        function ingestPDFFile() {
+            closeConnection();	//make sure any streaming event connection currently running is closed
+
+            if (selectedFile) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var fileContent = event.target.result;
+
+                    // Create a Blob from the file content
+                    var fileBlob = new Blob([fileContent], { type: selectedFile.type });
+
+                    // Create a FormData object
+                    var formData = new FormData();
+                    formData.append('file', fileBlob, selectedFile.name);
+
+                    // Send the file data to the webservice
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8002/ingest-pdf",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            $("#rawresponse").val(JSON.stringify(response));
+                            $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+                            $("#submit-btn-async").prop("disabled", false);
+                            $("#embed-btn").prop("disabled", false);
+                            $(".spinner").hide(); // Hide the loading spinner
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Error: " + error);
+                            $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+                            $("#submit-btn-async").prop("disabled", false);
+                            $("#embed-btn").prop("disabled", false);
+                            $(".spinner").hide(); // Hide the loading spinner
+                        }
+                    });
+                };
+                reader.readAsArrayBuffer(selectedFile);
+            } else {
+                // Handle case when no file is selected
+                alert("Please select a file before submitting.");
+            }                                
+        }
+
+        $("#question").on("input", function ()
+        {
+            var question = $(this).val();
+            if (question.trim().length > 0)
+            {
+                $("#submit-btn").prop("disabled", false);
+                $("#submit-btn-async").prop("disabled", false);
+                $("#embed-btn").prop("disabled", false);
+            } else
+            {
+                $("#submit-btn").prop("disabled", true);
+                $("#submit-btn-async").prop("disabled", true);
+                $("#embed-btn").prop("disabled", true);
+            }
+        });
+
+        
+
+        const enableIngestFileBtn = () => {
+            ingestFileBtn.disabled = fileNameTextBox.value.trim().length === 0;
+        };
+        
+        customButton.addEventListener('click', () => {
+            fileInput.click(); // Trigger file input click event
+        });
+
+        fileInput.addEventListener('change', () => {
+            selectedFile = fileInput.files[0];            
+            if (selectedFile) {
+                fileNameTextBox.value = selectedFile.name;                
+            } else {
+                fileNameTextBox.value = '';
+            }
+            enableIngestFileBtn();
+        });
 
     </script>
   </body>

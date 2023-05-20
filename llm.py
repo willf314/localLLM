@@ -3,7 +3,7 @@ import json
 import copy 
 from llama_cpp import Llama
 import asyncio
-import requests
+#import requests
 from fastapi import FastAPI, Request
 from sse_starlette import EventSourceResponse
 from fastapi.middleware.cors import CORSMiddleware
