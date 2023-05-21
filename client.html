@@ -153,14 +153,25 @@
           <textarea id="rawresponse" rows="10" placeholder="JSON response will appear here..." readonly></textarea>          
       </div>
     <script>
+        function disableButtons() {
+            $("#submit-btn").prop("disabled", true); 
+            $("#submit-btn-async").prop("disabled", true);
+            $("#embed-btn").prop("disabled", true);
+            $("#querydoc-btn").prop("disabled", true);
+        }
+
+        function enableButtons() {
+            $("#submit-btn").prop("disabled", false); // Enable the submit buttons
+            $("#submit-btn-async").prop("disabled", false);
+            $("#embed-btn").prop("disabled", false);
+            $("#querydoc-btn").prop("disabled", false);
+        }
 
         function sendQueryDoc() {
             closeConnection();	//make sure any streaming event connection currently running is closed
             var question = $("#question").val();
             var data = { "text": question };
-            $("#submit-btn").prop("disabled", true); // Disable the submit buttons
-            $("#submit-btn-async").prop("disabled", true);
-            $("#embed-btn").prop("disabled", true);
+            disableButtons();
             $(".spinner").show(); // Show the loading spinner
             $("#answer").val(""); // clear answer text area
             $("#rawresponse").val(""); //clear raw response text area
@@ -173,16 +184,12 @@
                 success: function (response) {
                     $("#answer").val(response.answer);
                     $("#rawresponse").val(JSON.stringify(response));
-                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                    $("#submit-btn-async").prop("disabled", false);
-                    $("#embed-btn").prop("disabled", false);
                     $(".spinner").hide(); // Hide the loading spinner
+                    enableButtons();
                 },
                 error: function (xhr, status, error) {
                     alert("Error: " + error);
-                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                    $("#submit-btn-async").prop("disabled", false);
-                    $("#embed-btn").prop("disabled", false);
+                    enableButtons();
                     $(".spinner").hide(); // Hide the loading spinner
                 }
             });
@@ -192,9 +199,7 @@
         closeConnection();	//make sure any streaming event connection currently running is closed
 		var question = $("#question").val();
         var data = { "text": question };
-		$("#submit-btn").prop("disabled", true); // Disable the submit buttons
-		$("#submit-btn-async").prop("disabled", true);
-		$("#embed-btn").prop("disabled", true);
+        disableButtons();
 		$(".spinner").show(); // Show the loading spinner
 		$("#answer").val(""); // clear answer text area
 		$("#rawresponse").val(""); //clear raw response text area
@@ -206,17 +211,13 @@
             dataType: "json",
             success: function(response) {
             $("#answer").val(response.answer);
-			$("#rawresponse").val(JSON.stringify(response));
-			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			$("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
+            $("#rawresponse").val(JSON.stringify(response));
+            enableButtons();
 			$(".spinner").hide(); // Hide the loading spinner
             },
             error: function(xhr, status, error) {
             alert("Error: " + error);
-			$("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			$("#submit-btn-async").prop("disabled", false);
-            $("#embed-btn").prop("disabled", false);
+            enableButtons();
 			$(".spinner").hide(); // Hide the loading spinner
             }
         });
@@ -258,10 +259,7 @@
 	        closeConnection();	//make sure any streaming event connection currently running is closed
 		    var question = $("#question").val();
             var data = { "text": question };
-		    $("#submit-btn").prop("disabled", true); // Disable the submit buttons
-		    $("#submit-btn-async").prop("disabled", true);
-            $("#embed-btn").prop("disabled", true);
-            $("#querydoc-btn").prop("disabled", true);
+            disableButtons();
 		    $(".spinner").show(); // Show the loading spinner
 		    $("#answer").val(""); // clear answer text area
 		    $("#rawresponse").val(""); //clear raw response text area
@@ -271,21 +269,14 @@
               data: JSON.stringify(data),
               contentType: "application/json; charset=utf-8",
               dataType: "json",
-              success: function(response) {
-                establishConnection();
-														
-			    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			    $("#submit-btn-async").prop("disabled", false);
-                  $("#embed-btn").prop("disabled", false);
-                  $("#querydoc-btn").prop("disabled", false);
-			    $(".spinner").hide(); // Hide the loading spinner
+              success: function (response) {
+                    establishConnection();
+                    enableButtons();														
+			        $(".spinner").hide(); // Hide the loading spinner
               },
               error: function(xhr, status, error) {
-                alert("Error: " + error);
-			    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-			    $("#submit-btn-async").prop("disabled", false);
-                $("#embed-btn").prop("disabled", false);
-                $("#querydoc-btn").prop("disabled", false);
+                  alert("Error: " + error);
+                  enableButtons();
 			    $(".spinner").hide(); // Hide the loading spinner
               }
             });
@@ -295,10 +286,7 @@
             closeConnection();	//make sure any streaming event connection currently running is closed
             var question = $("#question").val();
             var data = { "text": question };
-            $("#submit-btn").prop("disabled", true); // Disable the submit buttons
-            $("#submit-btn-async").prop("disabled", true);
-            $("#embed-btn").prop("disabled", true);
-            $("#querydoc-btn").prop("disabled", true);
+            disableButtons();
             $(".spinner").show(); // Show the loading spinner
             $("#answer").val(""); // clear answer text area
             $("#rawresponse").val(""); //clear raw response text area
@@ -310,18 +298,12 @@
                 dataType: "json",
                 success: function (response) {                
                     $("#rawresponse").val(JSON.stringify(response));
-                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                    $("#submit-btn-async").prop("disabled", false);
-                    $("#embed-btn").prop("disabled", false);
-                    $("#querydoc-btn").prop("disabled", false);
+                    enableButtons();
                     $(".spinner").hide(); // Hide the loading spinner
                 },
                 error: function (xhr, status, error) {
                     alert("Error: " + error);
-                    $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                    $("#submit-btn-async").prop("disabled", false);
-                    $("#embed-btn").prop("disabled", false);
-                    $("#querydoc-btn").prop("disabled", false);
+                    enableButtons();
                     $(".spinner").hide(); // Hide the loading spinner
                 }
             });
@@ -338,22 +320,14 @@
         function ingestPDFFile() {
             closeConnection();	//make sure any streaming event connection currently running is closed
 
-
-
             if (selectedFile) {
                 var reader = new FileReader();
-
-                $("#submit-btn").prop("disabled", true); // Disable the submit buttons
-                $("#submit-btn-async").prop("disabled", true);
-                $("#embed-btn").prop("disabled", true);
-                $("#querydoc-btn").prop("disabled", true);
-
+                disableButtons();
                 reader.onload = function (event) {
                     var fileContent = event.target.result;
 
                     // Create a Blob from the file content
                     var fileBlob = new Blob([fileContent], { type: selectedFile.type });
-
                     // Create a FormData object
                     var formData = new FormData();                    
                     formData.append('file', fileBlob, selectedFile.name);
@@ -367,18 +341,12 @@
                         processData: false,
                         success: function (response) {
                             $("#rawresponse").val(JSON.stringify(response));
-                            $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                            $("#submit-btn-async").prop("disabled", false);
-                            $("#embed-btn").prop("disabled", false);
-                            $("#querydoc-btn").prop("disabled", false);
+                            enableButtons();
                             $(".spinner").hide(); // Hide the loading spinner
                         },
                         error: function (xhr, status, error) {
                             alert("Error: " + error);
-                            $("#submit-btn").prop("disabled", false); // Enable the submit buttons
-                            $("#submit-btn-async").prop("disabled", false);
-                            $("#embed-btn").prop("disabled", false);
-                            $("#querydoc-btn").prop("disabled", false);
+                            enableButtons();
                             $(".spinner").hide(); // Hide the loading spinner
                         }
                     });
@@ -395,21 +363,13 @@
             var question = $(this).val();
             if (question.trim().length > 0)
             {
-                $("#submit-btn").prop("disabled", false);
-                $("#submit-btn-async").prop("disabled", false);
-                $("#embed-btn").prop("disabled", false);
-                $("#querydoc-btn").prop("disabled", false);
+                enableButtons();
             } else
             {
-                $("#submit-btn").prop("disabled", true);
-                $("#submit-btn-async").prop("disabled", true);
-                $("#embed-btn").prop("disabled", true);
-                $("#querydoc-btn").prop("disabled", true);
+                disableButtons();
             }
         });
-
-        
-
+       
         const enableIngestFileBtn = () => {
             ingestFileBtn.disabled = fileNameTextBox.value.trim().length === 0;
         };

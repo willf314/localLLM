@@ -1,9 +1,9 @@
+# Large Language Model Service configured to produce embeddings (llm-embedding.py)
 
 import json
 import copy 
 from llama_cpp import Llama
 import asyncio
-#import requests
 from fastapi import FastAPI, Request
 from sse_starlette import EventSourceResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -103,7 +103,7 @@ def trimChunk(chunk, max_length):
     else:
         return chunk[:max_length] + "..."
 
-# helper function to trim the length of embeddings
+# helper function to trim the length of embedding
 def trimEmbedding(embedding,max_length):
     str_repr = ", ".join([str(num) for num in embedding])
     if len(str_repr) <= max_length:
@@ -112,12 +112,12 @@ def trimEmbedding(embedding,max_length):
         trimmed_str = str_repr[:max_length] 
         return trimmed_str + " ..."
 
-# helper function to count and log individual embeddings
+# helper function to count and log individual embedding
 def enumerateEmbedding(embedding):
     for index, number in enumerate(embedding):
         logger.debug("Index:[" + str(index) + "] Number:[" + str(number) + "]")
 
-# API to create embeddings from a text string
+# API to create embedding from a text string
 @app.post("/get-embedding")
 async def get_embedding(request: LLMRequest):
     # log request
@@ -126,7 +126,7 @@ async def get_embedding(request: LLMRequest):
     logger.info("text:[%s]", trimChunk(request.text,80))
     logger.info("retreiving embedding...")
     
-    # retrieve embeddings and log individual numbers
+    # retrieve embedding and log individual numbers
     embedding = llm.embed(request.text)        
     enumerateEmbedding(embedding)
 

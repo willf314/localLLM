@@ -1,4 +1,4 @@
-# AI Control Service
+# AI Control Service (control.py)
 
 import io
 import asyncio
@@ -81,7 +81,7 @@ def get_embedding(chunk):
         # Get the response JSON
         response_json = response.json()
         embedding = response_json["embedding"]
-        # Process the embeddings as needed        
+        # Process the embedding as needed        
         return(embedding)
     else:
         logger.error("Request failed with status code: %d", response.status_code)
@@ -118,7 +118,7 @@ def file_exists_in_vectorDB(source_filename):
     return(False)
 
 # todo - add code to call Vector DB web service
-def persist_to_vectorDB(source_filename, text_chunk, embeddings):
+def persist_to_vectorDB(source_filename, text_chunk, embedding):
     
     return()
 
@@ -142,7 +142,7 @@ def trimChunk(chunk, max_length):
     else:
         return chunk[:max_length] + "..."
 
-# helper function to trim the length of embeddings
+# helper function to trim the length of embedding
 def trimEmbedding(embedding,max_length):
     str_repr = ", ".join([str(num) for num in embedding])
     if len(str_repr) <= max_length:
@@ -182,7 +182,8 @@ async def ingest_pdf(file: UploadFile = File(...)):
             )
 
         texts = text_splitter.split_text(raw_text)
-        logger.info("split text into " + str(len(texts)) + " chunks")
+        total_chunks = len(texts)
+        logger.info("split text into " + str(total_chunks) + " chunks")
         logger.info("")
     
         # process each chunk and persist to Vector db
@@ -190,7 +191,7 @@ async def ingest_pdf(file: UploadFile = File(...)):
         for chunk in texts:        
             i+=1
             # log chunk processing has started
-            logger.info("processing chunk " + str(i))
+            logger.info("processing chunk " + str(i) + "/" + str(total_chunks))
             logger.info("chunk size: " + str(len(chunk)))
             logger.info("text:[%s]",trimChunk(chunk, 80))
         
@@ -198,10 +199,10 @@ async def ingest_pdf(file: UploadFile = File(...)):
             logger.info("retrieving embedding...")
             embedding = get_embedding(chunk)
             logger.info("retrieved embedding vector consisting of " + str(len(embedding)) + " numbers")
-            logger.info("embedding:" + "[" + trimEmbeddings(embedding, 80) + "]")        
+            logger.info("embedding:" + "[" + trimEmbedding(embedding, 80) + "]")        
         
-            # persist chunk + embeddings to vector DB & log result
-            persist_to_vectorDB(filename, chunk, embeddings)
+            # persist chunk + embedding to vector DB & log result
+            persist_to_vectorDB(filename, chunk, embedding)
             logger.info("persisted chunk to vector DB")
             logger.info("")
                         
@@ -227,7 +228,7 @@ async def query(request: LLMRequest):
     # retrieve matching chunks from vector DB
     logger.info("retrieving matching chunks from Vector DB using a similarity search...")
     chunks=retrieve_matches_from_vectorDB(embedding)
-    logger.info("retrieved " + str(len(chunks)) + " from the VectorDB")
+    logger.info("retrieved " + str(len(chunks)) + " chunks from the VectorDB")
 
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
     context = ' '.join(chunks)

@@ -795,3 +795,287 @@ The expected number of purple apples sold in Year 2 cannot be determined from th
 2023-05-21 18:05:12,758 - INFO - prompt_tokens:[165]
 2023-05-21 18:05:12,758 - INFO - completion_tokens:[165]
 2023-05-21 18:05:12,758 - INFO - total_tokens:[217]
+2023-05-21 19:35:05,312 - INFO - 
+2023-05-21 19:35:05,313 - INFO - ###################################
+2023-05-21 19:35:05,313 - INFO - 
+2023-05-21 19:35:05,313 - INFO - AI control service started
+2023-05-21 19:35:05,313 - INFO - 
+2023-05-21 19:35:05,313 - INFO - ###################################
+2023-05-21 19:35:05,314 - INFO - 
+2023-05-21 19:35:25,148 - INFO - 
+2023-05-21 19:35:25,148 - INFO - /ingest-pdf API called
+2023-05-21 19:35:25,149 - INFO - checking if file [hello world.pdf] exists in VectorDB...
+2023-05-21 19:35:25,149 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 19:35:25,149 - INFO - converting PDF to text...
+2023-05-21 19:35:25,158 - INFO - converted PDF to text. Text length:[13]
+2023-05-21 19:35:25,158 - INFO - splitting text into chunks...
+2023-05-21 19:35:25,159 - INFO - split text into 1 chunks
+2023-05-21 19:35:25,159 - INFO - 
+2023-05-21 19:35:25,159 - INFO - processing chunk 1
+2023-05-21 19:35:25,159 - INFO - chunk size: 11
+2023-05-21 19:35:25,160 - INFO - text:[Hello world]
+2023-05-21 19:35:25,160 - INFO - retrieving embedding...
+2023-05-21 19:35:30,438 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:37:06,484 - INFO - 
+2023-05-21 19:37:06,484 - INFO - ###################################
+2023-05-21 19:37:06,485 - INFO - 
+2023-05-21 19:37:06,485 - INFO - AI control service started
+2023-05-21 19:37:06,485 - INFO - 
+2023-05-21 19:37:06,486 - INFO - ###################################
+2023-05-21 19:37:06,486 - INFO - 
+2023-05-21 19:38:01,942 - INFO - 
+2023-05-21 19:38:01,942 - INFO - ###################################
+2023-05-21 19:38:01,942 - INFO - 
+2023-05-21 19:38:01,943 - INFO - AI control service started
+2023-05-21 19:38:01,943 - INFO - 
+2023-05-21 19:38:01,944 - INFO - ###################################
+2023-05-21 19:38:01,945 - INFO - 
+2023-05-21 19:38:09,138 - INFO - 
+2023-05-21 19:38:09,138 - INFO - /ingest-pdf API called
+2023-05-21 19:38:09,139 - INFO - checking if file [hello world.pdf] exists in VectorDB...
+2023-05-21 19:38:09,139 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 19:38:09,139 - INFO - converting PDF to text...
+2023-05-21 19:38:09,143 - INFO - converted PDF to text. Text length:[13]
+2023-05-21 19:38:09,143 - INFO - splitting text into chunks...
+2023-05-21 19:38:09,143 - INFO - split text into 1 chunks
+2023-05-21 19:38:09,144 - INFO - 
+2023-05-21 19:38:09,144 - INFO - processing chunk 1
+2023-05-21 19:38:09,144 - INFO - chunk size: 11
+2023-05-21 19:38:09,145 - INFO - text:[Hello world]
+2023-05-21 19:38:09,145 - INFO - retrieving embedding...
+2023-05-21 19:38:14,112 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:38:14,115 - INFO - embedding:[0.5403406620025635, 0.793790340423584, -2.2326416969299316, -0.2270171195268631, ...]
+2023-05-21 19:38:14,115 - INFO - persisted chunk to vector DB
+2023-05-21 19:38:14,115 - INFO - 
+2023-05-21 19:38:14,116 - INFO - completed document ingestion
+2023-05-21 19:42:36,060 - INFO - /querydocs API called
+2023-05-21 19:42:36,061 - INFO - Query:[Is Finland developing any unusual products?]
+2023-05-21 19:42:36,061 - INFO - 
+2023-05-21 19:42:36,061 - INFO - retrieving embedding for query...
+2023-05-21 19:42:41,108 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:42:41,111 - INFO - embedding:[-0.3948149085044861, -0.12438368052244186, 1.4493380784988403, 0.846142411231994 ...]
+2023-05-21 19:42:41,111 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-21 19:42:41,111 - INFO - retrieved 4 from the VectorDB
+2023-05-21 19:42:41,112 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:42:41,112 - INFO - calling llm-query to get answer...
+2023-05-21 19:43:50,813 - INFO - question:[Is Finland developing any unusual products?]
+2023-05-21 19:43:50,814 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:43:50,814 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special which is expected to go on the market in Jan-2024 by orchadists who have been working on it since 2021 through genetic inheritance breeding existing variants. The apple is expected to be popular with younger kids due to its novel color and marketing efforts will be focused towards this demographic. The orchadists expect to sell 10,000 purple apples in year 1.]
+2023-05-21 19:43:50,815 - INFO - id:[cmpl-d6294c7a-dfef-4dde-a894-f54a89142206]
+2023-05-21 19:43:50,815 - INFO - object:[text_completion]
+2023-05-21 19:43:50,815 - INFO - created:[1684662163]
+2023-05-21 19:43:50,816 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-21 19:43:50,816 - INFO - prompt_tokens:[155]
+2023-05-21 19:43:50,816 - INFO - completion_tokens:[155]
+2023-05-21 19:43:50,817 - INFO - total_tokens:[263]
+2023-05-21 19:49:46,146 - INFO - 
+2023-05-21 19:49:46,146 - INFO - ###################################
+2023-05-21 19:49:46,147 - INFO - 
+2023-05-21 19:49:46,147 - INFO - AI control service started
+2023-05-21 19:49:46,148 - INFO - 
+2023-05-21 19:49:46,148 - INFO - ###################################
+2023-05-21 19:49:46,148 - INFO - 
+2023-05-21 19:51:28,625 - INFO - 
+2023-05-21 19:51:28,625 - INFO - ###################################
+2023-05-21 19:51:28,626 - INFO - 
+2023-05-21 19:51:28,626 - INFO - AI control service started
+2023-05-21 19:51:28,626 - INFO - 
+2023-05-21 19:51:28,626 - INFO - ###################################
+2023-05-21 19:51:28,627 - INFO - 
+2023-05-21 19:51:34,903 - INFO - /querydocs API called
+2023-05-21 19:51:34,903 - INFO - Query:[Is Finland developing any unusual products?]
+2023-05-21 19:51:34,903 - INFO - 
+2023-05-21 19:51:34,903 - INFO - retrieving embedding for query...
+2023-05-21 19:51:40,886 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:51:40,889 - INFO - embedding:[-0.3948149085044861, -0.12438368052244186, 1.4493380784988403, 0.846142411231994 ...]
+2023-05-21 19:51:40,889 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-21 19:51:40,890 - INFO - retrieved 4 from the VectorDB
+2023-05-21 19:51:40,890 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:51:40,890 - INFO - calling llm-query to get answer...
+2023-05-21 19:52:34,761 - INFO - question:[Is Finland developing any unusual products?]
+2023-05-21 19:52:34,762 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:52:34,762 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special which is expected to go on the market in Jan-2024 after scientists have been working on it since 2021 by breeding existing variants to achieve the desired colour through genetic inheritance.]
+2023-05-21 19:52:34,762 - INFO - id:[cmpl-ffedabd9-9448-4e4c-befd-3cc92c991593]
+2023-05-21 19:52:34,763 - INFO - object:[text_completion]
+2023-05-21 19:52:34,763 - INFO - created:[1684662702]
+2023-05-21 19:52:34,763 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-21 19:52:34,764 - INFO - prompt_tokens:[155]
+2023-05-21 19:52:34,764 - INFO - completion_tokens:[155]
+2023-05-21 19:52:34,765 - INFO - total_tokens:[216]
+2023-05-21 19:52:52,163 - INFO - 
+2023-05-21 19:52:52,163 - INFO - ###################################
+2023-05-21 19:52:52,164 - INFO - 
+2023-05-21 19:52:52,164 - INFO - AI control service started
+2023-05-21 19:52:52,164 - INFO - 
+2023-05-21 19:52:52,165 - INFO - ###################################
+2023-05-21 19:52:52,165 - INFO - 
+2023-05-21 19:52:56,742 - INFO - /querydocs API called
+2023-05-21 19:52:56,743 - INFO - Query:[Is Finland developing any unusual products?]
+2023-05-21 19:52:56,743 - INFO - 
+2023-05-21 19:52:56,744 - INFO - retrieving embedding for query...
+2023-05-21 19:53:02,854 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:53:02,856 - INFO - embedding:[-0.3948149085044861, -0.12438368052244186, 1.4493380784988403, 0.846142411231994 ...]
+2023-05-21 19:53:02,857 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-21 19:53:02,857 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-21 19:53:02,857 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:53:02,858 - INFO - calling llm-query to get answer...
+2023-05-21 19:53:58,172 - INFO - question:[Is Finland developing any unusual products?]
+2023-05-21 19:53:58,173 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unusual products? Answer:]
+2023-05-21 19:53:58,173 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special which is expected to go on the market in Jan-2024 after scientists have been working on it since 2021 by breeding existing variants to achieve the desired colour through genetic inheritance.]
+2023-05-21 19:53:58,174 - INFO - id:[cmpl-6ea61842-2ef5-43dd-a138-7b1cd4685b2b]
+2023-05-21 19:53:58,174 - INFO - object:[text_completion]
+2023-05-21 19:53:58,174 - INFO - created:[1684662784]
+2023-05-21 19:53:58,175 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-21 19:53:58,175 - INFO - prompt_tokens:[155]
+2023-05-21 19:53:58,175 - INFO - completion_tokens:[155]
+2023-05-21 19:53:58,176 - INFO - total_tokens:[216]
+2023-05-21 19:55:18,889 - INFO - 
+2023-05-21 19:55:18,889 - INFO - /ingest-pdf API called
+2023-05-21 19:55:18,890 - INFO - checking if file [hello world.pdf] exists in VectorDB...
+2023-05-21 19:55:18,890 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 19:55:18,890 - INFO - converting PDF to text...
+2023-05-21 19:55:18,894 - INFO - converted PDF to text. Text length:[13]
+2023-05-21 19:55:18,894 - INFO - splitting text into chunks...
+2023-05-21 19:55:18,894 - INFO - split text into 1 chunks
+2023-05-21 19:55:18,895 - INFO - 
+2023-05-21 19:55:18,895 - INFO - processing chunk 1
+2023-05-21 19:55:18,895 - INFO - chunk size: 11
+2023-05-21 19:55:18,896 - INFO - text:[Hello world]
+2023-05-21 19:55:18,896 - INFO - retrieving embedding...
+2023-05-21 19:55:22,698 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:55:22,701 - INFO - embedding:[0.5403406620025635, 0.793790340423584, -2.2326416969299316, -0.2270171195268631, ...]
+2023-05-21 19:55:22,701 - INFO - persisted chunk to vector DB
+2023-05-21 19:55:22,701 - INFO - 
+2023-05-21 19:55:22,702 - INFO - completed document ingestion
+2023-05-21 19:55:56,429 - INFO - 
+2023-05-21 19:55:56,430 - INFO - /ingest-pdf API called
+2023-05-21 19:55:56,430 - INFO - checking if file [WilliamFlemingResume.pdf] exists in VectorDB...
+2023-05-21 19:55:56,431 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 19:55:56,431 - INFO - converting PDF to text...
+2023-05-21 19:55:56,539 - INFO - converted PDF to text. Text length:[6065]
+2023-05-21 19:55:56,540 - INFO - splitting text into chunks...
+2023-05-21 19:55:56,540 - INFO - split text into 8 chunks
+2023-05-21 19:55:56,541 - INFO - 
+2023-05-21 19:55:56,541 - INFO - processing chunk 1
+2023-05-21 19:55:56,541 - INFO - chunk size: 982
+2023-05-21 19:55:56,542 - INFO - text:[Page 1 of 3   William Fleming   66 Park Avenue, Ashfield, NSW 2131   Mobile: 042...]
+2023-05-21 19:55:56,542 - INFO - retrieving embedding...
+2023-05-21 19:56:53,308 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:56:53,310 - INFO - embedding:[1.6081243753433228, -0.8050296306610107, -1.0207486152648926, -0.931861579418182 ...]
+2023-05-21 19:56:53,311 - INFO - persisted chunk to vector DB
+2023-05-21 19:56:53,311 - INFO - 
+2023-05-21 19:56:53,311 - INFO - processing chunk 2
+2023-05-21 19:56:53,312 - INFO - chunk size: 982
+2023-05-21 19:56:53,312 - INFO - text:[commitment .   OBJECTIVE   Currently seeking a new challenge as an IT program ma...]
+2023-05-21 19:56:53,312 - INFO - retrieving embedding...
+2023-05-21 19:57:47,973 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:57:47,976 - INFO - embedding:[-0.05103972554206848, -0.431013286113739, -1.3691474199295044, -0.34130048751831 ...]
+2023-05-21 19:57:47,976 - INFO - persisted chunk to vector DB
+2023-05-21 19:57:47,976 - INFO - 
+2023-05-21 19:57:47,977 - INFO - processing chunk 3
+2023-05-21 19:57:47,977 - INFO - chunk size: 956
+2023-05-21 19:57:47,978 - INFO - text:[• Successful ly deliver ed multiple  application projects including major ERP an...]
+2023-05-21 19:57:47,978 - INFO - retrieving embedding...
+2023-05-21 19:58:41,133 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:58:41,136 - INFO - embedding:[0.07940518110990524, 0.035962510854005814, -1.0566507577896118, -0.3348667025566 ...]
+2023-05-21 19:58:41,136 - INFO - persisted chunk to vector DB
+2023-05-21 19:58:41,137 - INFO - 
+2023-05-21 19:58:41,137 - INFO - processing chunk 4
+2023-05-21 19:58:41,138 - INFO - chunk size: 957
+2023-05-21 19:58:41,138 - INFO - text:[new driving school booking system    Page 2 of 3   CAREER SUMMARY cont.       20...]
+2023-05-21 19:58:41,139 - INFO - retrieving embedding...
+2023-05-21 19:59:39,497 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 19:59:39,500 - INFO - embedding:[0.8151281476020813, 0.2919958233833313, -0.5032786130905151, -1.5941920280456543 ...]
+2023-05-21 19:59:39,500 - INFO - persisted chunk to vector DB
+2023-05-21 19:59:39,500 - INFO - 
+2023-05-21 19:59:39,501 - INFO - processing chunk 5
+2023-05-21 19:59:39,501 - INFO - chunk size: 937
+2023-05-21 19:59:39,501 - INFO - text:[• Responsible for managing a team of developers (6 FTE ) including staff trainin...]
+2023-05-21 19:59:39,502 - INFO - retrieving embedding...
+2023-05-21 20:00:37,117 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:00:37,120 - INFO - embedding:[0.7702327966690063, 0.25901225209236145, -1.5937038660049438, -0.145786091685295 ...]
+2023-05-21 20:00:37,120 - INFO - persisted chunk to vector DB
+2023-05-21 20:00:37,120 - INFO - 
+2023-05-21 20:00:37,120 - INFO - processing chunk 6
+2023-05-21 20:00:37,121 - INFO - chunk size: 938
+2023-05-21 20:00:37,122 - INFO - text:[2002    English Teacher, Seoul   • Overseas experience , taught English in Seoul...]
+2023-05-21 20:00:37,122 - INFO - retrieving embedding...
+2023-05-21 20:01:42,016 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:01:42,019 - INFO - embedding:[0.842998206615448, -0.22058402001857758, -1.4843100309371948, -0.442246735095977 ...]
+2023-05-21 20:01:42,019 - INFO - persisted chunk to vector DB
+2023-05-21 20:01:42,020 - INFO - 
+2023-05-21 20:01:42,020 - INFO - processing chunk 7
+2023-05-21 20:01:42,021 - INFO - chunk size: 929
+2023-05-21 20:01:42,021 - INFO - text:[manage patients in Auckland public hospitals   • Technologies used: VB 6, ADO, X...]
+2023-05-21 20:01:42,021 - INFO - retrieving embedding...
+2023-05-21 20:02:47,489 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:02:47,493 - INFO - embedding:[-0.4713382422924042, -0.07696700096130371, 0.1634720265865326, 0.442309886217117 ...]
+2023-05-21 20:02:47,493 - INFO - persisted chunk to vector DB
+2023-05-21 20:02:47,493 - INFO - 
+2023-05-21 20:02:47,494 - INFO - processing chunk 8
+2023-05-21 20:02:47,494 - INFO - chunk size: 515
+2023-05-21 20:02:47,494 - INFO - text:[• UML Analysis and Design Course (2000)   • Business Analysis Course – Australia...]
+2023-05-21 20:02:47,495 - INFO - retrieving embedding...
+2023-05-21 20:03:31,095 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:03:31,098 - INFO - embedding:[1.3517228364944458, -0.6950743794441223, -0.981112003326416, -0.9482699632644653 ...]
+2023-05-21 20:03:31,099 - INFO - persisted chunk to vector DB
+2023-05-21 20:03:31,099 - INFO - 
+2023-05-21 20:03:31,100 - INFO - completed document ingestion
+2023-05-21 20:03:41,939 - INFO - 
+2023-05-21 20:03:41,939 - INFO - ###################################
+2023-05-21 20:03:41,939 - INFO - 
+2023-05-21 20:03:41,940 - INFO - AI control service started
+2023-05-21 20:03:41,940 - INFO - 
+2023-05-21 20:03:41,941 - INFO - ###################################
+2023-05-21 20:03:41,941 - INFO - 
+2023-05-21 20:03:55,969 - INFO - 
+2023-05-21 20:03:55,969 - INFO - /ingest-pdf API called
+2023-05-21 20:03:55,969 - INFO - checking if file [hello world.pdf] exists in VectorDB...
+2023-05-21 20:03:55,970 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 20:03:55,970 - INFO - converting PDF to text...
+2023-05-21 20:03:55,973 - INFO - converted PDF to text. Text length:[13]
+2023-05-21 20:03:55,973 - INFO - splitting text into chunks...
+2023-05-21 20:03:55,974 - INFO - split text into 1 chunks
+2023-05-21 20:03:55,974 - INFO - 
+2023-05-21 20:03:55,974 - INFO - processing chunk 1/1
+2023-05-21 20:03:55,975 - INFO - chunk size: 11
+2023-05-21 20:03:55,975 - INFO - text:[Hello world]
+2023-05-21 20:03:55,975 - INFO - retrieving embedding...
+2023-05-21 20:04:00,338 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:04:00,341 - INFO - embedding:[0.5403406620025635, 0.793790340423584, -2.2326416969299316, -0.2270171195268631, ...]
+2023-05-21 20:04:00,341 - INFO - persisted chunk to vector DB
+2023-05-21 20:04:00,342 - INFO - 
+2023-05-21 20:04:00,342 - INFO - completed document ingestion
+2023-05-21 20:04:07,809 - INFO - 
+2023-05-21 20:04:07,809 - INFO - /ingest-pdf API called
+2023-05-21 20:04:07,809 - INFO - checking if file [WilliamCovidCert.pdf] exists in VectorDB...
+2023-05-21 20:04:07,810 - INFO - confirmed file does not exist in VectorDB
+2023-05-21 20:04:07,810 - INFO - converting PDF to text...
+2023-05-21 20:04:07,820 - INFO - converted PDF to text. Text length:[1352]
+2023-05-21 20:04:07,821 - INFO - splitting text into chunks...
+2023-05-21 20:04:07,821 - INFO - split text into 2 chunks
+2023-05-21 20:04:07,821 - INFO - 
+2023-05-21 20:04:07,822 - INFO - processing chunk 1/2
+2023-05-21 20:04:07,822 - INFO - chunk size: 960
+2023-05-21 20:04:07,822 - INFO - text:[COVID-19 digital certificate This individual has received all required COVID-19 ...]
+2023-05-21 20:04:07,823 - INFO - retrieving embedding...
+2023-05-21 20:05:10,509 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:05:10,512 - INFO - embedding:[0.8827850222587585, -0.7359647750854492, -0.2752893269062042, 1.0619066953659058 ...]
+2023-05-21 20:05:10,512 - INFO - persisted chunk to vector DB
+2023-05-21 20:05:10,513 - INFO - 
+2023-05-21 20:05:10,513 - INFO - processing chunk 2/2
+2023-05-21 20:05:10,513 - INFO - chunk size: 551
+2023-05-21 20:05:10,514 - INFO - text:[The data is based on information provided by vaccination providers and the accur...]
+2023-05-21 20:05:10,514 - INFO - retrieving embedding...
+2023-05-21 20:05:47,221 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-21 20:05:47,224 - INFO - embedding:[0.652701199054718, -1.0821945667266846, 0.06905493885278702, 0.4554295837879181, ...]
+2023-05-21 20:05:47,225 - INFO - persisted chunk to vector DB
+2023-05-21 20:05:47,225 - INFO - 
+2023-05-21 20:05:47,225 - INFO - completed document ingestion
+2023-05-21 20:16:00,616 - INFO - 
+2023-05-21 20:16:00,616 - INFO - ###################################
+2023-05-21 20:16:00,617 - INFO - 
+2023-05-21 20:16:00,617 - INFO - AI control service started
+2023-05-21 20:16:00,617 - INFO - 
+2023-05-21 20:16:00,617 - INFO - ###################################
+2023-05-21 20:16:00,618 - INFO - 
