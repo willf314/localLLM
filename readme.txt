@@ -4,8 +4,8 @@ Installation
 
 Files:
 1.control.py : AI Control Service
-2.llm-embedding: LLM configured to generate embeddings
-3.llm-query: LLM configured for text completion (answering queries)
+2.llm-embedding.py: LLM configured to generate embeddings
+3.llm-query.py: LLM configured for text completion (answering queries)
 4.startAI.bat: batch file to start the above components on ports 8000, 8001, 8002
 5.GPT4All-13B-snoozy.ggml.q4_2.bin: the LLM (same LLM currently used for both services) 
 6. client.html: test client with javascript to connect to the services
