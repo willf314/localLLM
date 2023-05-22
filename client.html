@@ -5,25 +5,26 @@
     <title>LLM Test Client</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<style>
-	   body {
+        body {
         background-color: #f5f5f5;
         font-family: "Helvetica Neue", sans-serif;
-      }
-      #container {
+        }
+        #container {
         display: flex;
         flex-direction: column;
         align-items: left;
         margin-top: 20px;
-		margin-right: 10px;
-      }
-      label {
+        margin-right: 10px;
+        }
+        label {
         text-align: left;
         font-size: 20px;
+        margin-top: 15px;
         margin-bottom: 10px;
         color: #333;
-      }
+        }
       
-	  textarea, input {
+        textarea, input {
         display: block;
         width: calc(100% - 10px);
         padding: 10px;
@@ -33,95 +34,80 @@
         font-size: 18px;
         color: #333;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);	
-		margin-right: 10px;				
-		line-height: 1.5;
-		padding-top: 10px;			
-      }
+        margin-right: 10px;				
+        line-height: 1.5;
+        padding-top: 10px;			
+        }
 	  	  	  	  	 
-      textarea::placeholder {
+        textarea::placeholder {
         color: #aaa;
         font-style: italic;
-      }
+        }
 	  
-      textarea:focus, input {
+        textarea:focus, input {
         outline: none;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-      }
+        }
 	  
-      #question {        		
-		height: 150px;
+        #question {        		
+        height: 150px;
         margin-bottom: 20px;			
-      }
+        }
 	  
-      #answer {
+        #answer {
         height: 150px;
         margin-bottom: 30px;				
-      }
+        }
 	  
-      input {
-          height: 50px;
-          margin-bottom: 20px;
-      }
+        input {
+            height: 50px;
+            margin-bottom: 20px;
+        }
 
-    .btn-group button {
+        .btn-group button, .ingest-btn-group button {
         display: inline-block;
-		width: 160px;
-		padding: 10px 20px;
-		border-radius: 5px;
-		border: none;
-		background-color: #6495ED;
-		color: #fff;
-		font-size: 18px;
-		cursor: pointer;
-		transition: background-color 0.3s ease;
-		margin-left: auto;
-		margin-right: 10px;
-		float: right; /* Float the buttons side by side */
-    }
-      	 
-	.btn-group, button:not(:last-child) {
-		border-right: none; /* Prevent double borders */
-	}
-
-    .ingest-btn-group button {
-        display: inline-block;
-        width: 160px;
+        width: 170px;
         padding: 10px 20px;
         border-radius: 5px;
         border: none;
         background-color: #6495ED;
         color: #fff;
-        font-size: 18px;
+        font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
         margin-left: auto;
         margin-right: 10px;
         float: right; /* Float the buttons side by side */
-    }
-
-    .ingest-btn-group, button:not(:last-child) {
+        text-align: center;        
+        }
+      	 
+        .btn-group, button:not(:last-child) {
         border-right: none; /* Prevent double borders */
-    }
+        }
+        
+        .ingest-btn-group, button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+        }
 
-	.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    z-index: 1;
-	}
+        .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        z-index: 1;
+        }
 
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-	}
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
 
-        #submit-btn:disabled, #submit-btn-async:disabled, #embed-btn:disabled, #ingestFile-btn:disabled, #querydoc-btn:disabled {
+        .btn-group button:disabled, #ingestFile-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
@@ -141,10 +127,11 @@
           <label for="question">Enter your question:</label>
           <textarea id="question" name="question" placeholder="Enter your question here..."></textarea>
           <div class="btn-group">
-              <button id="submit-btn" onclick="sendQuestion()" disabled>Query(Sync)</button>
-              <button id="submit-btn-async" onclick="sendQuestionAsync()" disabled>Query(Async)</button>
+              <button id="submit-btn" onclick="sendQuestion()" disabled>Query Sync</button>
+              <button id="submit-btn-async" onclick="sendQuestionAsync()" disabled>Query Async</button>
               <button id="embed-btn" onclick="sendEmbedRequest()" disabled>Embed Text</button>
-              <button id="querydoc-btn" onclick="sendQueryDoc()" disabled>QueryDoc(Sync)</button>
+              <button id="querydoc-btn" onclick="sendQueryDoc()" disabled>Query Doc Sync</button>
+              <button id="querydoc-async-btn" onclick="sendQueryDocAsync()" disabled>Query Doc Async</button>
           </div>
           <div class="spinner" style="display:none;"></div>
           <label for="answer">Answer:</label>
@@ -158,6 +145,7 @@
             $("#submit-btn-async").prop("disabled", true);
             $("#embed-btn").prop("disabled", true);
             $("#querydoc-btn").prop("disabled", true);
+            $("#querydoc-async-btn").prop("disabled", true);
         }
 
         function enableButtons() {
@@ -165,6 +153,7 @@
             $("#submit-btn-async").prop("disabled", false);
             $("#embed-btn").prop("disabled", false);
             $("#querydoc-btn").prop("disabled", false);
+            $("#querydoc-async-btn").prop("disabled", false);
         }
 
         function sendQueryDoc() {
@@ -195,6 +184,34 @@
             });
         }
 
+        function sendQueryDocAsync() {
+            closeConnection();	//make sure any streaming event connection currently running is closed
+            var question = $("#question").val();
+            var data = { "text": question };
+            disableButtons();
+            $(".spinner").show(); // Show the loading spinner
+            $("#answer").val(""); // clear answer text area
+            $("#rawresponse").val(""); //clear raw response text area
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8002/query-docs-async",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    establishConnection();
+                    $("#rawresponse").val(JSON.stringify(response));
+                    enableButtons();
+                    $(".spinner").hide(); // Hide the loading spinner
+                },
+                error: function (xhr, status, error) {
+                    alert("Error: " + error);
+                    enableButtons();
+                    $(".spinner").hide(); // Hide the loading spinner
+                }
+            });
+        }
+
         function sendQuestion() {
         closeConnection();	//make sure any streaming event connection currently running is closed
 		var question = $("#question").val();
@@ -205,7 +222,7 @@
 		$("#rawresponse").val(""); //clear raw response text area
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/query",
+            url: "http://localhost:8001/query",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -237,10 +254,11 @@
 	    const handleCloseEvent = (event) => {		
 			    closeConnection();
 		    };
-			
+
+        // establish connection with query llm to receive async event stream response to a query			
 	    function establishConnection()
 	    {
-		    eventSource = new EventSource("http://localhost:8000/stream-answer");		
+		    eventSource = new EventSource("http://localhost:8001/stream-answer");		
 		    eventSource.addEventListener("message", handleMessageEvent);
 		    eventSource.addEventListener("error", handleCloseEvent);
 		    connectionInProgress = true;
@@ -265,7 +283,7 @@
 		    $("#rawresponse").val(""); //clear raw response text area
             $.ajax({
               type: "POST",
-              url: "http://localhost:8000/query-async",
+              url: "http://localhost:8001/query-async",
               data: JSON.stringify(data),
               contentType: "application/json; charset=utf-8",
               dataType: "json",

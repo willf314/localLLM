@@ -1079,3 +1079,388 @@ The expected number of purple apples sold in Year 2 cannot be determined from th
 2023-05-21 20:16:00,617 - INFO - 
 2023-05-21 20:16:00,617 - INFO - ###################################
 2023-05-21 20:16:00,618 - INFO - 
+2023-05-22 19:05:25,052 - INFO - 
+2023-05-22 19:05:25,052 - INFO - ###################################
+2023-05-22 19:05:25,052 - INFO - 
+2023-05-22 19:05:25,052 - INFO - AI control service started
+2023-05-22 19:05:25,052 - INFO - 
+2023-05-22 19:05:25,052 - INFO - ###################################
+2023-05-22 19:05:25,052 - INFO - 
+2023-05-22 19:10:14,577 - INFO - /querydocs API called
+2023-05-22 19:10:14,577 - INFO - Query:[Is it possible to grow purple apples?]
+2023-05-22 19:10:14,577 - INFO - 
+2023-05-22 19:10:14,577 - INFO - retrieving embedding for query...
+2023-05-22 19:10:20,715 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 19:10:20,715 - INFO - embedding:[-0.739952564239502, 0.508007824420929, 1.7069624662399292, 1.176466464996338, -0 ...]
+2023-05-22 19:10:20,715 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 19:10:20,715 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 19:10:20,715 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is it possible to grow purple apples? Answer:]
+2023-05-22 19:10:20,715 - INFO - calling llm-query to get answer...
+2023-05-22 19:11:08,974 - INFO - question:[Is it possible to grow purple apples?]
+2023-05-22 19:11:08,974 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is it possible to grow purple apples? Answer:]
+2023-05-22 19:11:08,974 - INFO - answer:[ Yes, it is possible to grow purple apples by breeding existing variants through genetic inheritance as the Royale Special apple has been developed and is set to go on the market in Jan-2024.]
+2023-05-22 19:11:08,974 - INFO - id:[cmpl-7709bdeb-25fa-45e6-9563-69d99cb47aeb]
+2023-05-22 19:11:08,988 - INFO - object:[text_completion]
+2023-05-22 19:11:08,988 - INFO - created:[1684746622]
+2023-05-22 19:11:08,989 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 19:11:08,989 - INFO - prompt_tokens:[158]
+2023-05-22 19:11:08,989 - INFO - completion_tokens:[158]
+2023-05-22 19:11:08,990 - INFO - total_tokens:[203]
+2023-05-22 19:13:58,321 - INFO - 
+2023-05-22 19:13:58,322 - INFO - /ingest-pdf API called
+2023-05-22 19:13:58,322 - INFO - checking if file [WilliamCovidCert.pdf] exists in VectorDB...
+2023-05-22 19:13:58,323 - INFO - confirmed file does not exist in VectorDB
+2023-05-22 19:13:58,323 - INFO - converting PDF to text...
+2023-05-22 19:13:58,337 - INFO - converted PDF to text. Text length:[1352]
+2023-05-22 19:13:58,337 - INFO - splitting text into chunks...
+2023-05-22 19:13:58,337 - INFO - split text into 2 chunks
+2023-05-22 19:13:58,337 - INFO - 
+2023-05-22 19:13:58,337 - INFO - processing chunk 1/2
+2023-05-22 19:13:58,337 - INFO - chunk size: 960
+2023-05-22 19:13:58,337 - INFO - text:[COVID-19 digital certificate This individual has received all required COVID-19 ...]
+2023-05-22 19:13:58,337 - INFO - retrieving embedding...
+2023-05-22 19:14:59,242 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 19:14:59,258 - INFO - embedding:[0.8827850222587585, -0.7359647750854492, -0.2752893269062042, 1.0619066953659058 ...]
+2023-05-22 19:14:59,258 - INFO - persisted chunk to vector DB
+2023-05-22 19:14:59,258 - INFO - 
+2023-05-22 19:14:59,258 - INFO - processing chunk 2/2
+2023-05-22 19:14:59,258 - INFO - chunk size: 551
+2023-05-22 19:14:59,258 - INFO - text:[The data is based on information provided by vaccination providers and the accur...]
+2023-05-22 19:14:59,258 - INFO - retrieving embedding...
+2023-05-22 19:15:35,437 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 19:15:35,453 - INFO - embedding:[0.652701199054718, -1.0821945667266846, 0.06905493885278702, 0.4554295837879181, ...]
+2023-05-22 19:15:35,453 - INFO - persisted chunk to vector DB
+2023-05-22 19:15:35,453 - INFO - 
+2023-05-22 19:15:35,453 - INFO - completed document ingestion
+2023-05-22 19:23:33,616 - INFO - /querydocs API called
+2023-05-22 19:23:33,616 - INFO - Query:[What different colours can an apple have?]
+2023-05-22 19:23:33,616 - INFO - 
+2023-05-22 19:23:33,616 - INFO - retrieving embedding for query...
+2023-05-22 19:23:38,837 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 19:23:38,837 - INFO - embedding:[-0.37150225043296814, 0.5211715698242188, 0.4736519455909729, 0.9683068990707397 ...]
+2023-05-22 19:23:38,837 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 19:23:38,837 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 19:23:38,837 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:What different colours can an apple have? Answer:]
+2023-05-22 19:23:38,837 - INFO - calling llm-query to get answer...
+2023-05-22 19:24:18,154 - INFO - question:[What different colours can an apple have?]
+2023-05-22 19:24:18,154 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:What different colours can an apple have? Answer:]
+2023-05-22 19:24:18,154 - INFO - answer:[Apples can come in a variety of colors including red, green, yellow, orange, and brown.]
+2023-05-22 19:24:18,154 - INFO - id:[cmpl-fea8feeb-bd2c-4eda-80c4-f97107945b17]
+2023-05-22 19:24:18,154 - INFO - object:[text_completion]
+2023-05-22 19:24:18,154 - INFO - created:[1684747420]
+2023-05-22 19:24:18,154 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 19:24:18,154 - INFO - prompt_tokens:[156]
+2023-05-22 19:24:18,154 - INFO - completion_tokens:[156]
+2023-05-22 19:24:18,154 - INFO - total_tokens:[177]
+2023-05-22 19:25:42,535 - INFO - /querydocs API called
+2023-05-22 19:25:42,535 - INFO - Query:[Does Finland grow apples?]
+2023-05-22 19:25:42,535 - INFO - 
+2023-05-22 19:25:42,535 - INFO - retrieving embedding for query...
+2023-05-22 19:25:47,229 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 19:25:47,229 - INFO - embedding:[-0.17711029946804047, -0.5692342519760132, 1.3939974308013916, 0.114601500332355 ...]
+2023-05-22 19:25:47,229 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 19:25:47,229 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 19:25:47,229 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Does Finland grow apples? Answer:]
+2023-05-22 19:25:47,229 - INFO - calling llm-query to get answer...
+2023-05-22 19:26:04,518 - INFO - question:[Does Finland grow apples?]
+2023-05-22 19:26:04,518 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Does Finland grow apples? Answer:]
+2023-05-22 19:26:04,518 - INFO - answer:[ Yes, Finland grows apples through their orchadists who developed a new variety of purple apple called the Royale Special and plan on selling 10,000 of them in year 1.]
+2023-05-22 19:26:04,518 - INFO - id:[cmpl-08c08e50-12a6-426f-ac3c-41bf15772397]
+2023-05-22 19:26:04,518 - INFO - object:[text_completion]
+2023-05-22 19:26:04,518 - INFO - created:[1684747549]
+2023-05-22 19:26:04,518 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 19:26:04,518 - INFO - prompt_tokens:[154]
+2023-05-22 19:26:04,518 - INFO - completion_tokens:[154]
+2023-05-22 19:26:04,518 - INFO - total_tokens:[198]
+2023-05-22 19:47:59,492 - INFO - 
+2023-05-22 19:47:59,492 - INFO - ###################################
+2023-05-22 19:47:59,492 - INFO - 
+2023-05-22 19:47:59,492 - INFO - AI control service started
+2023-05-22 19:47:59,492 - INFO - 
+2023-05-22 19:47:59,492 - INFO - ###################################
+2023-05-22 19:47:59,492 - INFO - 
+2023-05-22 19:52:43,867 - INFO - 
+2023-05-22 19:52:43,867 - INFO - ###################################
+2023-05-22 19:52:43,867 - INFO - 
+2023-05-22 19:52:43,867 - INFO - AI control service started
+2023-05-22 19:52:43,867 - INFO - 
+2023-05-22 19:52:43,867 - INFO - ###################################
+2023-05-22 19:52:43,867 - INFO - 
+2023-05-22 19:53:09,474 - INFO - 
+2023-05-22 19:53:09,474 - INFO - ###################################
+2023-05-22 19:53:09,474 - INFO - 
+2023-05-22 19:53:09,474 - INFO - AI control service started
+2023-05-22 19:53:09,474 - INFO - 
+2023-05-22 19:53:09,474 - INFO - ###################################
+2023-05-22 19:53:09,474 - INFO - 
+2023-05-22 20:21:09,235 - INFO - /query-docs API called
+2023-05-22 20:21:09,235 - INFO - Query:[Is Finland developing any apple variants?]
+2023-05-22 20:21:09,235 - INFO - 
+2023-05-22 20:21:09,235 - INFO - retrieving embedding for query...
+2023-05-22 20:21:14,735 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:21:14,735 - INFO - embedding:[-0.9421485662460327, 0.032494112849235535, 1.7333167791366577, 0.653569281101226 ...]
+2023-05-22 20:21:14,735 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:21:14,735 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:21:14,735 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:21:14,735 - INFO - calling llm-query to get answer...
+2023-05-22 20:21:54,308 - INFO - question:[Is Finland developing any apple variants?]
+2023-05-22 20:21:54,308 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:21:54,308 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special.]
+2023-05-22 20:21:54,308 - INFO - id:[cmpl-01ec72ed-b6e5-4910-8e19-d898b553ca9c]
+2023-05-22 20:21:54,308 - INFO - object:[text_completion]
+2023-05-22 20:21:54,308 - INFO - created:[1684750876]
+2023-05-22 20:21:54,308 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:21:54,308 - INFO - prompt_tokens:[155]
+2023-05-22 20:21:54,308 - INFO - completion_tokens:[155]
+2023-05-22 20:21:54,308 - INFO - total_tokens:[173]
+2023-05-22 20:22:02,309 - INFO - /query-docs API called
+2023-05-22 20:22:02,309 - INFO - Query:[Is Finland developing any apple variants?]
+2023-05-22 20:22:02,309 - INFO - 
+2023-05-22 20:22:02,310 - INFO - retrieving embedding for query...
+2023-05-22 20:22:07,214 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:22:07,214 - INFO - embedding:[-0.9421485662460327, 0.032494112849235535, 1.7333167791366577, 0.653569281101226 ...]
+2023-05-22 20:22:07,214 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:22:07,214 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:22:07,214 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:22:07,214 - INFO - calling llm-query to get answer...
+2023-05-22 20:22:14,905 - INFO - question:[Is Finland developing any apple variants?]
+2023-05-22 20:22:14,905 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:22:14,905 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special.]
+2023-05-22 20:22:14,905 - INFO - id:[cmpl-a4387318-c410-4f9e-8ec3-584fb520a566]
+2023-05-22 20:22:14,905 - INFO - object:[text_completion]
+2023-05-22 20:22:14,905 - INFO - created:[1684750929]
+2023-05-22 20:22:14,905 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:22:14,905 - INFO - prompt_tokens:[155]
+2023-05-22 20:22:14,905 - INFO - completion_tokens:[155]
+2023-05-22 20:22:14,905 - INFO - total_tokens:[173]
+2023-05-22 20:27:31,545 - INFO - 
+2023-05-22 20:27:31,545 - INFO - ###################################
+2023-05-22 20:27:31,560 - INFO - 
+2023-05-22 20:27:31,560 - INFO - AI control service started
+2023-05-22 20:27:31,560 - INFO - 
+2023-05-22 20:27:31,560 - INFO - ###################################
+2023-05-22 20:27:31,560 - INFO - 
+2023-05-22 20:28:15,541 - INFO - /query-docs API called
+2023-05-22 20:28:15,541 - INFO - Query:[Is Finland developing any apple variants?]
+2023-05-22 20:28:15,541 - INFO - 
+2023-05-22 20:28:15,541 - INFO - retrieving embedding for query...
+2023-05-22 20:28:20,948 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:28:20,948 - INFO - embedding:[-0.9421485662460327, 0.032494112849235535, 1.7333167791366577, 0.653569281101226 ...]
+2023-05-22 20:28:20,948 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:28:20,948 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:28:20,948 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:28:20,948 - INFO - calling llm-query to get answer...
+2023-05-22 20:29:01,221 - INFO - question:[Is Finland developing any apple variants?]
+2023-05-22 20:29:01,221 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any apple variants? Answer:]
+2023-05-22 20:29:01,221 - INFO - answer:[ Yes, Finland is developing a new variety of purple apple called the Royale Special.]
+2023-05-22 20:29:01,221 - INFO - id:[cmpl-5a38f8ee-e7b3-49d2-a1a4-8a304038cf26]
+2023-05-22 20:29:01,221 - INFO - object:[text_completion]
+2023-05-22 20:29:01,237 - INFO - created:[1684751302]
+2023-05-22 20:29:01,237 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:29:01,237 - INFO - prompt_tokens:[155]
+2023-05-22 20:29:01,237 - INFO - completion_tokens:[155]
+2023-05-22 20:29:01,237 - INFO - total_tokens:[173]
+2023-05-22 20:31:44,115 - INFO - /query-docs API called
+2023-05-22 20:31:44,115 - INFO - Query:[Is Finland developing any unique apples?]
+2023-05-22 20:31:44,115 - INFO - 
+2023-05-22 20:31:44,115 - INFO - retrieving embedding for query...
+2023-05-22 20:31:49,285 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:31:49,285 - INFO - embedding:[-1.1261794567108154, -0.0034428383223712444, 1.5937896966934204, 1.0270053148269 ...]
+2023-05-22 20:31:49,285 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:31:49,301 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:31:49,301 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unique apples? Answer:]
+2023-05-22 20:31:49,301 - INFO - calling llm-query to get answer...
+2023-05-22 20:32:07,609 - INFO - question:[Is Finland developing any unique apples?]
+2023-05-22 20:32:07,609 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing any unique apples? Answer:]
+2023-05-22 20:32:07,609 - INFO - answer:[ Yes, Finland is developing a new variety of apple called the Royale Special, which is expected to go on the market in Jan-2024 and will be sold for 10,000 units in its first year.]
+2023-05-22 20:32:07,609 - INFO - id:[cmpl-21e9e340-a6c6-4877-b8e6-88c7aaa534ba]
+2023-05-22 20:32:07,609 - INFO - object:[text_completion]
+2023-05-22 20:32:07,609 - INFO - created:[1684751511]
+2023-05-22 20:32:07,609 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:32:07,609 - INFO - prompt_tokens:[156]
+2023-05-22 20:32:07,609 - INFO - completion_tokens:[156]
+2023-05-22 20:32:07,609 - INFO - total_tokens:[205]
+2023-05-22 20:34:27,314 - INFO - 
+2023-05-22 20:34:27,314 - INFO - ###################################
+2023-05-22 20:34:27,314 - INFO - 
+2023-05-22 20:34:27,314 - INFO - AI control service started
+2023-05-22 20:34:27,314 - INFO - 
+2023-05-22 20:34:27,314 - INFO - ###################################
+2023-05-22 20:34:27,314 - INFO - 
+2023-05-22 20:34:32,073 - INFO - /query-docs-async API called
+2023-05-22 20:34:32,073 - INFO - Query:[Is Finland developing purple apples?]
+2023-05-22 20:34:32,075 - INFO - 
+2023-05-22 20:34:32,075 - INFO - retrieving embedding for query...
+2023-05-22 20:34:37,700 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:34:37,700 - INFO - embedding:[-0.6018534302711487, 0.14624249935150146, 1.3014346361160278, 1.2186505794525146 ...]
+2023-05-22 20:34:37,700 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:34:37,700 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:34:37,700 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is Finland developing purple apples? Answer:]
+2023-05-22 20:34:37,700 - INFO - calling llm-query to get answer...
+2023-05-22 20:34:39,725 - INFO - async query successful
+2023-05-22 20:35:43,232 - INFO - /query-docs-async API called
+2023-05-22 20:35:43,232 - INFO - Query:[Is it possible for apples to be purple?]
+2023-05-22 20:35:43,232 - INFO - 
+2023-05-22 20:35:43,232 - INFO - retrieving embedding for query...
+2023-05-22 20:35:48,992 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:35:49,008 - INFO - embedding:[-0.8451696038246155, 0.22512902319431305, 1.1911449432373047, 0.8304511904716492 ...]
+2023-05-22 20:35:49,008 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:35:49,008 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:35:49,008 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is it possible for apples to be purple? Answer:]
+2023-05-22 20:35:49,008 - INFO - calling llm-query to get answer...
+2023-05-22 20:35:51,032 - INFO - async query successful
+2023-05-22 20:36:15,099 - INFO - /query-docs API called
+2023-05-22 20:36:15,099 - INFO - Query:[Is it possible for apples to be purple?]
+2023-05-22 20:36:15,099 - INFO - 
+2023-05-22 20:36:15,101 - INFO - retrieving embedding for query...
+2023-05-22 20:36:20,927 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:36:20,927 - INFO - embedding:[-0.8451696038246155, 0.22512902319431305, 1.1911449432373047, 0.8304511904716492 ...]
+2023-05-22 20:36:20,927 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:36:20,927 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:36:20,927 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is it possible for apples to be purple? Answer:]
+2023-05-22 20:36:20,927 - INFO - calling llm-query to get answer...
+2023-05-22 20:36:29,753 - INFO - question:[Is it possible for apples to be purple?]
+2023-05-22 20:36:29,753 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Is it possible for apples to be purple? Answer:]
+2023-05-22 20:36:29,753 - INFO - answer:[ Yes, it is possible for apples to be purple as they have been developed through genetic inheritance.]
+2023-05-22 20:36:29,753 - INFO - id:[cmpl-859ac958-8987-4aa3-87dc-d70154aa9103]
+2023-05-22 20:36:29,753 - INFO - object:[text_completion]
+2023-05-22 20:36:29,753 - INFO - created:[1684751782]
+2023-05-22 20:36:29,753 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:36:29,753 - INFO - prompt_tokens:[159]
+2023-05-22 20:36:29,753 - INFO - completion_tokens:[159]
+2023-05-22 20:36:29,753 - INFO - total_tokens:[181]
+2023-05-22 20:40:04,139 - INFO - /query-docs API called
+2023-05-22 20:40:04,139 - INFO - Query:[can apples be purple?]
+2023-05-22 20:40:04,139 - INFO - 
+2023-05-22 20:40:04,139 - INFO - retrieving embedding for query...
+2023-05-22 20:40:09,024 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:40:09,024 - INFO - embedding:[-1.1257354021072388, 0.2828807830810547, 1.2066596746444702, 0.5069651007652283, ...]
+2023-05-22 20:40:09,024 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:40:09,024 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:40:09,024 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:can apples be purple? Answer:]
+2023-05-22 20:40:09,024 - INFO - calling llm-query to get answer...
+2023-05-22 20:40:19,243 - INFO - question:[can apples be purple?]
+2023-05-22 20:40:19,243 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:can apples be purple? Answer:]
+2023-05-22 20:40:19,243 - INFO - answer:[ Yes, it is possible for apples to be purple through breeding and genetic inheritance.]
+2023-05-22 20:40:19,243 - INFO - id:[cmpl-f26f48bf-53bb-43c7-9198-969d3a297eb2]
+2023-05-22 20:40:19,243 - INFO - object:[text_completion]
+2023-05-22 20:40:19,243 - INFO - created:[1684752011]
+2023-05-22 20:40:19,243 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 20:40:19,243 - INFO - prompt_tokens:[155]
+2023-05-22 20:40:19,243 - INFO - completion_tokens:[155]
+2023-05-22 20:40:19,243 - INFO - total_tokens:[175]
+2023-05-22 20:40:25,309 - INFO - /query-docs-async API called
+2023-05-22 20:40:25,309 - INFO - Query:[can apples be purple?]
+2023-05-22 20:40:25,311 - INFO - 
+2023-05-22 20:40:25,311 - INFO - retrieving embedding for query...
+2023-05-22 20:40:30,128 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 20:40:30,128 - INFO - embedding:[-1.1257354021072388, 0.2828807830810547, 1.2066596746444702, 0.5069651007652283, ...]
+2023-05-22 20:40:30,128 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 20:40:30,128 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 20:40:30,128 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:can apples be purple? Answer:]
+2023-05-22 20:40:30,128 - INFO - calling llm-query to get answer...
+2023-05-22 20:40:32,151 - INFO - async query successful
+2023-05-22 21:01:57,825 - INFO - 
+2023-05-22 21:01:57,825 - INFO - ###################################
+2023-05-22 21:01:57,825 - INFO - 
+2023-05-22 21:01:57,825 - INFO - AI control service started
+2023-05-22 21:01:57,825 - INFO - 
+2023-05-22 21:01:57,825 - INFO - ###################################
+2023-05-22 21:01:57,825 - INFO - 
+2023-05-22 21:04:34,421 - INFO - 
+2023-05-22 21:04:34,421 - INFO - ###################################
+2023-05-22 21:04:34,421 - INFO - 
+2023-05-22 21:04:34,421 - INFO - AI control service started
+2023-05-22 21:04:34,421 - INFO - 
+2023-05-22 21:04:34,421 - INFO - ###################################
+2023-05-22 21:04:34,421 - INFO - 
+2023-05-22 21:05:17,402 - INFO - 
+2023-05-22 21:05:17,402 - INFO - ###################################
+2023-05-22 21:05:17,402 - INFO - 
+2023-05-22 21:05:17,402 - INFO - AI control service started
+2023-05-22 21:05:17,402 - INFO - 
+2023-05-22 21:05:17,402 - INFO - ###################################
+2023-05-22 21:05:17,402 - INFO - 
+2023-05-22 21:05:17,402 - INFO - Loaded environment variables:
+2023-05-22 21:05:17,402 - INFO - LLM_QUERY_URL:None
+2023-05-22 21:05:17,402 - INFO - LLM_QUERY_ASYNC_URL:None
+2023-05-22 21:05:17,402 - INFO - LLM_EMBEDDING_URL:None
+2023-05-22 21:07:01,989 - INFO - 
+2023-05-22 21:07:01,989 - INFO - ###################################
+2023-05-22 21:07:01,989 - INFO - 
+2023-05-22 21:07:01,989 - INFO - AI control service started
+2023-05-22 21:07:01,989 - INFO - 
+2023-05-22 21:07:01,989 - INFO - ###################################
+2023-05-22 21:07:01,989 - INFO - 
+2023-05-22 21:07:01,989 - INFO - Loaded environment variables:
+2023-05-22 21:07:01,989 - INFO - LLM_QUERY_URL:http://localhost:8001/query
+2023-05-22 21:07:01,989 - INFO - LLM_QUERY_ASYNC_URL:http://localhost:8001/query-async
+2023-05-22 21:07:01,989 - INFO - LLM_EMBEDDING_URL:http://localhost:8000/get-embedding
+2023-05-22 21:07:39,864 - INFO - 
+2023-05-22 21:07:39,864 - INFO - ###################################
+2023-05-22 21:07:39,864 - INFO - 
+2023-05-22 21:07:39,864 - INFO - AI control service started
+2023-05-22 21:07:39,864 - INFO - 
+2023-05-22 21:07:39,864 - INFO - ###################################
+2023-05-22 21:07:39,864 - INFO - 
+2023-05-22 21:07:39,864 - INFO - Loaded environment variables:
+2023-05-22 21:07:39,864 - INFO - LLM_QUERY_URL:http://localhost:8001/query
+2023-05-22 21:07:39,864 - INFO - LLM_QUERY_ASYNC_URL:http://localhost:8001/query-async
+2023-05-22 21:07:39,864 - INFO - LLM_EMBEDDING_URL:http://localhost:8000/get-embedding
+2023-05-22 21:08:43,683 - INFO - /query-docs API called
+2023-05-22 21:08:43,683 - INFO - Query:[Does Finland have any purple apples?]
+2023-05-22 21:08:43,683 - INFO - 
+2023-05-22 21:08:43,683 - INFO - retrieving embedding for query...
+2023-05-22 21:08:50,427 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 21:08:50,427 - INFO - embedding:[-0.5785573124885559, 0.4668932855129242, 1.8810994625091553, 1.298832893371582,  ...]
+2023-05-22 21:08:50,427 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 21:08:50,427 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 21:08:50,427 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Does Finland have any purple apples? Answer:]
+2023-05-22 21:08:50,427 - INFO - calling llm-query to get answer...
+2023-05-22 21:09:40,389 - INFO - question:[Does Finland have any purple apples?]
+2023-05-22 21:09:40,389 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Does Finland have any purple apples? Answer:]
+2023-05-22 21:09:40,389 - INFO - answer:[ Yes, Finland has developed a new variety of purple apple called the Royale Special which is due to go on the market in Jan-2024 and expected to be popular with younger kids who will be attracted to the novel colour.]
+2023-05-22 21:09:40,389 - INFO - id:[cmpl-30dc7185-25de-4f4f-8f87-b077f3da8b0d]
+2023-05-22 21:09:40,389 - INFO - object:[text_completion]
+2023-05-22 21:09:40,389 - INFO - created:[1684753732]
+2023-05-22 21:09:40,389 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-22 21:09:40,389 - INFO - prompt_tokens:[157]
+2023-05-22 21:09:40,389 - INFO - completion_tokens:[157]
+2023-05-22 21:09:40,389 - INFO - total_tokens:[208]
+2023-05-22 21:10:28,217 - INFO - /query-docs-async API called
+2023-05-22 21:10:28,217 - INFO - Query:[Does Finland have any purple apples?]
+2023-05-22 21:10:28,217 - INFO - 
+2023-05-22 21:10:28,217 - INFO - retrieving embedding for query...
+2023-05-22 21:10:34,168 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 21:10:34,168 - INFO - embedding:[-0.5785573124885559, 0.4668932855129242, 1.8810994625091553, 1.298832893371582,  ...]
+2023-05-22 21:10:34,168 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-22 21:10:34,168 - INFO - retrieved 4 chunks from the VectorDB
+2023-05-22 21:10:34,168 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024. Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance. The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused. The orchadists expect to sell 10,000 purple apples in year 1. Question:Does Finland have any purple apples? Answer:]
+2023-05-22 21:10:34,168 - INFO - calling llm-query to get answer...
+2023-05-22 21:10:36,193 - INFO - async query successful
+2023-05-22 21:12:55,173 - INFO - 
+2023-05-22 21:12:55,173 - INFO - /ingest-pdf API called
+2023-05-22 21:12:55,173 - INFO - checking if file [WilliamCovidCert.pdf] exists in VectorDB...
+2023-05-22 21:12:55,173 - INFO - confirmed file does not exist in VectorDB
+2023-05-22 21:12:55,173 - INFO - converting PDF to text...
+2023-05-22 21:12:55,189 - INFO - converted PDF to text. Text length:[1352]
+2023-05-22 21:12:55,189 - INFO - splitting text into chunks...
+2023-05-22 21:12:55,189 - INFO - split text into 2 chunks
+2023-05-22 21:12:55,189 - INFO - 
+2023-05-22 21:12:55,189 - INFO - processing chunk 1/2
+2023-05-22 21:12:55,189 - INFO - chunk size: 960
+2023-05-22 21:12:55,189 - INFO - text:[COVID-19 digital certificate This individual has received all required COVID-19 ...]
+2023-05-22 21:12:55,189 - INFO - retrieving embedding...
+2023-05-22 21:13:57,013 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 21:13:57,013 - INFO - embedding:[0.8827850222587585, -0.7359647750854492, -0.2752893269062042, 1.0619066953659058 ...]
+2023-05-22 21:13:57,013 - INFO - persisted chunk to vector DB
+2023-05-22 21:13:57,013 - INFO - 
+2023-05-22 21:13:57,013 - INFO - processing chunk 2/2
+2023-05-22 21:13:57,013 - INFO - chunk size: 551
+2023-05-22 21:13:57,013 - INFO - text:[The data is based on information provided by vaccination providers and the accur...]
+2023-05-22 21:13:57,013 - INFO - retrieving embedding...
+2023-05-22 21:14:32,959 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-22 21:14:32,959 - INFO - embedding:[0.652701199054718, -1.0821945667266846, 0.06905493885278702, 0.4554295837879181, ...]
+2023-05-22 21:14:32,959 - INFO - persisted chunk to vector DB
+2023-05-22 21:14:32,959 - INFO - 
+2023-05-22 21:14:32,959 - INFO - completed document ingestion

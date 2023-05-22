@@ -12,6 +12,7 @@ import requests
 import logging
 from logging.handlers import RotatingFileHandler
 import sys
+import os 
 
 # setup logging
 logger = logging.getLogger(__name__)
@@ -36,6 +37,16 @@ logger.info("AI control service started")
 logger.info("")
 logger.info("###################################")
 logger.info("")
+
+# set environment variables passed in from batch file
+LLM_QUERY_URL = os.environ.get("LLM_QUERY_URL")
+LLM_QUERY_ASYNC_URL = os.environ.get("LLM_QUERY_ASYNC_URL")
+LLM_EMBEDDING_URL = os.environ.get("LLM_EMBEDDING_URL")
+
+logger.info("Loaded environment variables:")
+logger.info("LLM_QUERY_URL:%s",LLM_QUERY_URL)
+logger.info("LLM_QUERY_ASYNC_URL:%s",LLM_QUERY_ASYNC_URL)
+logger.info("LLM_EMBEDDING_URL:%s",LLM_EMBEDDING_URL)
 
 # Create the FastAPI instance
 app = FastAPI()
@@ -66,7 +77,7 @@ def extract_text_from_pdf(file):
 def get_embedding(chunk):
 
     # Define the endpoint URL
-    endpoint_url = "http://localhost:8000/get-embedding"
+    endpoint_url = LLM_EMBEDDING_URL
 
     # Define the request payload
     payload = {
@@ -88,9 +99,9 @@ def get_embedding(chunk):
         return()
 
 def query_llm(prompt):
-
+    
     # define the endpoint URL
-    endpoint_url = "http://localhost:8000/query"
+    endpoint_url = LLM_QUERY_URL
 
     # define the request payload
     payload = {
@@ -111,6 +122,26 @@ def query_llm(prompt):
         logger.error("Request failed with status code: %d", response.status_code)
         return()
 
+def query_llm_async(prompt):
+    
+    # define the endpoint URL
+    endpoint_url = LLM_QUERY_ASYNC_URL
+
+    # define the request payload
+    payload = {
+        "text": prompt
+    }
+
+    # make a POST request to the LLM service
+    response = requests.post(endpoint_url, json=payload)
+
+    # check the response status code
+    if response.status_code == 200:                        
+        # return response       
+        return("async query successful")
+    else:
+        logger.error("Request failed with status code: %d", response.status_code)
+        return("async query failed")
 
 # todo - add code to call VectorDB service to check if chunks for this file already exist
 def file_exists_in_vectorDB(source_filename):
@@ -128,9 +159,7 @@ def retrieve_matches_from_vectorDB(embedding):
     chunks = ["A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024.",
               "Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance.",
               "The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused.",
-              "The orchadists expect to sell 10,000 purple apples in year 1."]
-
-    
+              "The orchadists expect to sell 10,000 purple apples in year 1."]    
     return chunks
 
 
@@ -215,7 +244,7 @@ async def ingest_pdf(file: UploadFile = File(...)):
 @app.post("/query-docs")
 async def query(request: LLMRequest):
     
-    logger.info("/querydocs API called")
+    logger.info("/query-docs API called")
     logger.info("Query:[%s]", request.text)
     logger.info("")
 
@@ -233,20 +262,17 @@ async def query(request: LLMRequest):
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
     context = ' '.join(chunks)
     prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
-    prompt += "Context:" + context + " "
-            #prompt += "If you cant find any relevant facts just respond that you cant find the answer. "
+    prompt += "Context:" + context + " "            
     prompt += "Question:" + request.text + " "
     prompt += "Answer:"
-    
-    
+        
     logger.debug("created prompt with context information:[%s]", prompt)
     
     #call LLM
     logger.info("calling llm-query to get answer...")
     result = query_llm(prompt)
     
-    #retrieve answer + supporting data from the LLM result    
-        
+    #retrieve answer + supporting data from the LLM result            
     answer = result["answer"]
     id = result["id"]
     object = result["object"]
@@ -275,10 +301,45 @@ async def query(request: LLMRequest):
            "total_tokens" : total_tokens}
 
 
+# web service API to query docs and trigger response via event stream
+# todo -refactor to reduce duplication of code between sync & async versions of the function
 
+@app.post("/query-docs-async")
+async def query(request: LLMRequest):
+    
+    logger.info("/query-docs-async API called")
+    logger.info("Query:[%s]", request.text)
+    logger.info("")
 
-#@app.post("/ask-question-async")
+    # get embedding for query from llm
+    logger.info("retrieving embedding for query...")
+    embedding = get_embedding(request.text)
+    logger.info("retrieved embedding vector consisting of " + str(len(embedding)) + " numbers")
+    logger.info("embedding:" + "[" + trimEmbedding(embedding, 80) + "]")    
 
+    # retrieve matching chunks from vector DB
+    logger.info("retrieving matching chunks from Vector DB using a similarity search...")
+    chunks=retrieve_matches_from_vectorDB(embedding)
+    logger.info("retrieved " + str(len(chunks)) + " chunks from the VectorDB")
+
+    # create prompt for LLM - join query with the context information retrieved from the Vector DB
+    context = ' '.join(chunks)
+    prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
+    prompt += "Context:" + context + " "            
+    prompt += "Question:" + request.text + " "
+    prompt += "Answer:"
+        
+    logger.debug("created prompt with context information:[%s]", prompt)
+    
+    #call LLM
+    logger.info("calling llm-query to get answer...")
+    result = query_llm_async(prompt)
+    
+    #retrieve answer + supporting data from the LLM result            
+    logger.info(result)
+        
+    #return result to client
+    return {"message" : result}
 
 
 
