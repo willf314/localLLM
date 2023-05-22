@@ -30,6 +30,9 @@ The LLM can be sourced from:
 https://huggingface.co/TheBloke/GPT4All-13B-snoozy-GGML/tree/previous_llama
 
 Start up:
+
+set webservice endpoint URLs env variables in startAI.bat file
+set startup ports in uvicorn commands in startAI.bat
 run startAI.bat to start-up the services
 the command executed for each service is: uvicorn [python file name]:app --reload --port [port to run on]
 this starts the webservices using the Python FASTAPI framework
