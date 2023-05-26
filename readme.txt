@@ -4,18 +4,18 @@ Installation
 
 Files:
 1.control.py : AI Control Service
-2.llm-embedding: LLM configured to generate embeddings
-3.llm-query: LLM configured for text completion (answering queries)
-4.startAI.bat: batch file to start the above components on ports 8000, 8001, 8002
+2.llm-embedding.py: LLM configured to generate embeddings
+3.llm-query.py: LLM configured for text completion (answering queries)
+4.startAI.bat: batch file to set env variables and start web-services, one service for each of the scripts above 
 5.GPT4All-13B-snoozy.ggml.q4_2.bin: the LLM (same LLM currently used for both services) 
-6. client.html: test client with javascript to connect to the services
+6.client.html: test client with javascript to connect to the services
 
 Each service produces a log file, same content is also streamed to stdout:
-1. control.log
-2. llm-embedding.log
-3. llm-query.log
+1.control.log
+2.llm-embedding.log
+3.llm-query.log
 
-There is no config file, all parameters are hardcoded in the python scripts
+There is no config file
 
 Install requirements:
 1.pip install fastapi
