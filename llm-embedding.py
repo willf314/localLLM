@@ -33,7 +33,9 @@ logger.info("###################################")
 logger.info("")
 
 logger.info("Loading model...")
-llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=True, n_ctx = 4096)   
+llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=True, n_ctx = 2048)   
+
+
 logger.info("Model loaded")
 
 app = FastAPI()

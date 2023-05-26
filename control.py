@@ -1,11 +1,15 @@
 # AI Control Service (control.py)
 
+# library imports
 import io
+import json
 import asyncio
 import PyPDF2
 from fastapi import FastAPI, UploadFile, File
+from uvicorn import Server
 from sse_starlette import EventSourceResponse
 from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel 
 from langchain.text_splitter import CharacterTextSplitter
 import requests
@@ -13,6 +17,14 @@ import logging
 from logging.handlers import RotatingFileHandler
 import sys
 import os 
+from qdrant_client import QdrantClient
+from qdrant_client.models import Distance, VectorParams, PointStruct, CollectionInfo, ScoredPoint
+
+# constants
+COLLECTION_NAME = "collection1"
+EMBED_VECTOR_SIZE = 5120
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
 
 # setup logging
 logger = logging.getLogger(__name__)
@@ -42,15 +54,32 @@ logger.info("")
 LLM_QUERY_URL = os.environ.get("LLM_QUERY_URL")
 LLM_QUERY_ASYNC_URL = os.environ.get("LLM_QUERY_ASYNC_URL")
 LLM_EMBEDDING_URL = os.environ.get("LLM_EMBEDDING_URL")
+QDRANT_URL = os.environ.get("QDRANT_URL")
 
 logger.info("Loaded environment variables:")
-logger.info("LLM_QUERY_URL:%s",LLM_QUERY_URL)
-logger.info("LLM_QUERY_ASYNC_URL:%s",LLM_QUERY_ASYNC_URL)
-logger.info("LLM_EMBEDDING_URL:%s",LLM_EMBEDDING_URL)
+logger.info("LLM_QUERY_URL:%s", "[" + LLM_QUERY_URL + "]")
+logger.info("LLM_QUERY_ASYNC_URL:%s", "[" + LLM_QUERY_ASYNC_URL + "]")
+logger.info("LLM_EMBEDDING_URL:%s", "[" + LLM_EMBEDDING_URL + "]")
+logger.info("QDRANT_URL:%s", "[" + QDRANT_URL + "]")
 
-# Create the FastAPI instance
-app = FastAPI()
+# connect to Qdrant vector database
+logger.info("connecting to qdrant db at [" + QDRANT_URL + "] ...")
+vectorDB = QdrantClient(QDRANT_URL)
+logger.info("succesfully connected to vector DB")
+   
+# log collection status
+logger.info("connecting to collection [" + COLLECTION_NAME + "]...")
+collectionInfo = vectorDB.get_collection(collection_name=COLLECTION_NAME) 
+logger.info("collection status:")
+logger.info("   status:%s", str(collectionInfo.status))
+logger.info("   points_count:%s", str(collectionInfo.points_count))
+logger.info("   vectors_count:%s", str(collectionInfo.vectors_count))
+logger.info("   segments_count:%s", str(collectionInfo.segments_count))    
+logger.info("   payload_schema:%s", str(collectionInfo.payload_schema))
 
+# create the FastAPI instance
+app = FastAPI()    
+            
 # Set up CORS middleware - add the Access-Control-Allow-Origin header 
 origins = ["*"]
 app.add_middleware(
@@ -148,20 +177,47 @@ def file_exists_in_vectorDB(source_filename):
 
     return(False)
 
-# todo - add code to call Vector DB web service
-def persist_to_vectorDB(source_filename, text_chunk, embedding):
-    
+# persist chunk to vector db - Qdrant
+def persist_to_vectorDB(idx, source_filename, text_chunk, embedding):  
+    vectorDB.upsert(
+    collection_name=COLLECTION_NAME,
+    points=[
+        PointStruct(
+            id=idx, 
+            vector=embedding,
+            payload={"text": text_chunk, "source_filename" : source_filename}
+        )        
+    ]
+    )
     return()
 
-# todo - add code to do a similarity search on the vector DB
-# for now - hard coded response for testing
+# perform vector DB similarity search
 def retrieve_matches_from_vectorDB(embedding):
-    chunks = ["A new variety of purple apple called the Royale Special has been developed by orchadists in Finland and is due to go on the market in Jan-2024.",
-              "Scientists have been working the apple since 2021, creating it by breeding existing variants to achieve the desired colour by genetic inheritiance.",
-              "The apple is expected to be popular with younger kids who will be attracted to the novel colour, and this is where marketing efforts will be focused.",
-              "The orchadists expect to sell 10,000 purple apples in year 1."]    
-    return chunks
+    # perform search, return up to 5 results
+    search_result = vectorDB.search(
+            collection_name=COLLECTION_NAME,
+            query_vector=embedding, 
+            limit=5,
+            with_payload=True,
+            with_vectors=False
+            )    
 
+    # log search results
+    logger.info("retrieved " + str(search_result.count) + " results")
+    for result in search_result:
+        logger.info("id:" + str(result.id))
+        logger.info("score:" + str(result.score))
+        logger.info("payload:" + str(result.payload))
+        logger.info("\n")
+                 
+    return search_result
+
+# join search result payload together to form a context string
+def CreateContextFromSearchResults(search_results):
+    context=""
+    for result in search_results:
+        context += json.dumps(result.payload) + " "   
+    return context
 
 # helper function to trim the length of a chunk, and remove any newline characters to it prints better
 def trimChunk(chunk, max_length):
@@ -197,11 +253,9 @@ async def ingest_pdf(file: UploadFile = File(...)):
         logger.info("confirmed file does not exist in VectorDB")
         logger.info("converting PDF to text...")
         raw_text = extract_text_from_pdf(io.BytesIO(await file.read()))
-        logger.info("converted PDF to text. Text length:[" + str(len(raw_text))+"]")        
+        logger.info("converted PDF to text. Text length:" + str(len(raw_text)))        
         
         # split text into chunks  
-        CHUNK_SIZE = 1000
-        CHUNK_OVERLAP = 200
         logger.info("splitting text into chunks...")
         text_splitter = CharacterTextSplitter(
             separator = "\n",
@@ -231,7 +285,8 @@ async def ingest_pdf(file: UploadFile = File(...)):
             logger.info("embedding:" + "[" + trimEmbedding(embedding, 80) + "]")        
         
             # persist chunk + embedding to vector DB & log result
-            persist_to_vectorDB(filename, chunk, embedding)
+            logger.info("persisting text chunk and embedding to vector db...")
+            persist_to_vectorDB(i, filename, chunk, embedding)
             logger.info("persisted chunk to vector DB")
             logger.info("")
                         
@@ -256,11 +311,10 @@ async def query(request: LLMRequest):
 
     # retrieve matching chunks from vector DB
     logger.info("retrieving matching chunks from Vector DB using a similarity search...")
-    chunks=retrieve_matches_from_vectorDB(embedding)
-    logger.info("retrieved " + str(len(chunks)) + " chunks from the VectorDB")
-
+    search_results=retrieve_matches_from_vectorDB(embedding)
+    
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
-    context = ' '.join(chunks)
+    context = CreateContextFromSearchResults(search_results)
     prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
     prompt += "Context:" + context + " "            
     prompt += "Question:" + request.text + " "
@@ -319,11 +373,10 @@ async def query(request: LLMRequest):
 
     # retrieve matching chunks from vector DB
     logger.info("retrieving matching chunks from Vector DB using a similarity search...")
-    chunks=retrieve_matches_from_vectorDB(embedding)
-    logger.info("retrieved " + str(len(chunks)) + " chunks from the VectorDB")
+    search_results=retrieve_matches_from_vectorDB(embedding)    
 
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
-    context = ' '.join(chunks)
+    context = CreateContextFromSearchResults(search_results)
     prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
     prompt += "Context:" + context + " "            
     prompt += "Question:" + request.text + " "
