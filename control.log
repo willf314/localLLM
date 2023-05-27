@@ -1677,3 +1677,196 @@ status=<CollectionStatus.GREEN: 'green'> optimizer_status=<OptimizersStatusOneOf
 2023-05-26 19:49:47,737 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a COVID Vaccination? Answer:]
 2023-05-26 19:49:47,738 - INFO - calling llm-query to get answer...
 2023-05-26 19:49:49,776 - INFO - async query successful
+2023-05-27 10:04:25,954 - INFO - 
+2023-05-27 10:04:25,954 - INFO - ###################################
+2023-05-27 10:04:25,954 - INFO - 
+2023-05-27 10:04:25,954 - INFO - AI control service started
+2023-05-27 10:04:25,954 - INFO - 
+2023-05-27 10:04:25,954 - INFO - ###################################
+2023-05-27 10:04:25,954 - INFO - 
+2023-05-27 10:04:25,954 - INFO - Loaded environment variables:
+2023-05-27 10:04:25,970 - INFO - LLM_QUERY_URL:[http://localhost:8001/query]
+2023-05-27 10:04:25,970 - INFO - LLM_QUERY_ASYNC_URL:[http://localhost:8001/query-async]
+2023-05-27 10:04:25,970 - INFO - LLM_EMBEDDING_URL:[http://localhost:8000/get-embedding]
+2023-05-27 10:04:25,970 - INFO - QDRANT_URL:[http://localhost:6333]
+2023-05-27 10:04:25,970 - INFO - connecting to qdrant db at [http://localhost:6333] ...
+2023-05-27 10:04:25,986 - INFO - succesfully connected to vector DB
+2023-05-27 10:04:25,986 - INFO - connecting to collection [collection1]...
+2023-05-27 10:08:13,914 - INFO - 
+2023-05-27 10:08:13,914 - INFO - ###################################
+2023-05-27 10:08:13,929 - INFO - 
+2023-05-27 10:08:13,929 - INFO - AI control service started
+2023-05-27 10:08:13,929 - INFO - 
+2023-05-27 10:08:13,929 - INFO - ###################################
+2023-05-27 10:08:13,929 - INFO - 
+2023-05-27 10:08:13,929 - INFO - Loaded environment variables:
+2023-05-27 10:08:13,929 - INFO - LLM_QUERY_URL:[http://localhost:8001/query]
+2023-05-27 10:08:13,929 - INFO - LLM_QUERY_ASYNC_URL:[http://localhost:8001/query-async]
+2023-05-27 10:08:13,929 - INFO - LLM_EMBEDDING_URL:[http://localhost:8000/get-embedding]
+2023-05-27 10:08:13,929 - INFO - QDRANT_URL:[http://localhost:6333]
+2023-05-27 10:08:13,929 - INFO - connecting to qdrant db at [http://localhost:6333] ...
+2023-05-27 10:08:13,945 - INFO - succesfully connected to vector DB
+2023-05-27 10:08:13,945 - INFO - connecting to collection [collection1]...
+2023-05-27 10:08:13,961 - INFO - collection status:
+2023-05-27 10:08:13,961 - INFO -    status:CollectionStatus.GREEN
+2023-05-27 10:08:13,961 - INFO -    points_count:0
+2023-05-27 10:08:13,961 - INFO -    vectors_count:0
+2023-05-27 10:08:13,961 - INFO -    segments_count:8
+2023-05-27 10:08:13,961 - INFO -    payload_schema:{}
+2023-05-27 10:08:52,178 - INFO - 
+2023-05-27 10:08:52,178 - INFO - /ingest-pdf API called
+2023-05-27 10:08:52,178 - INFO - checking if file [WilliamCovidCert.pdf] exists in VectorDB...
+2023-05-27 10:08:52,179 - INFO - confirmed file does not exist in VectorDB
+2023-05-27 10:08:52,179 - INFO - converting PDF to text...
+2023-05-27 10:08:52,193 - INFO - converted PDF to text. Text length:1352
+2023-05-27 10:08:52,193 - INFO - splitting text into chunks...
+2023-05-27 10:08:52,193 - INFO - split text into 2 chunks
+2023-05-27 10:08:52,193 - INFO - 
+2023-05-27 10:08:52,194 - INFO - processing chunk 1/2
+2023-05-27 10:08:52,194 - INFO - chunk size: 960
+2023-05-27 10:08:52,194 - INFO - text:[COVID-19 digital certificate This individual has received all required COVID-19 ...]
+2023-05-27 10:08:52,194 - INFO - retrieving embedding...
+2023-05-27 10:09:50,130 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:09:50,130 - INFO - embedding:[0.8827850222587585, -0.7359647750854492, -0.2752893269062042, 1.0619066953659058 ...]
+2023-05-27 10:09:50,130 - INFO - persisting text chunk and embedding to vector db...
+2023-05-27 10:09:50,177 - INFO - persisted chunk to vector DB
+2023-05-27 10:09:50,177 - INFO - 
+2023-05-27 10:09:50,177 - INFO - processing chunk 2/2
+2023-05-27 10:09:50,177 - INFO - chunk size: 551
+2023-05-27 10:09:50,177 - INFO - text:[The data is based on information provided by vaccination providers and the accur...]
+2023-05-27 10:09:50,177 - INFO - retrieving embedding...
+2023-05-27 10:10:29,757 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:10:29,757 - INFO - embedding:[0.652701199054718, -1.0821945667266846, 0.06905493885278702, 0.4554295837879181, ...]
+2023-05-27 10:10:29,757 - INFO - persisting text chunk and embedding to vector db...
+2023-05-27 10:10:29,835 - INFO - persisted chunk to vector DB
+2023-05-27 10:10:29,835 - INFO - 
+2023-05-27 10:10:29,835 - INFO - completed document ingestion
+2023-05-27 10:11:12,443 - INFO - /query-docs-async API called
+2023-05-27 10:11:12,443 - INFO - Query:[Does William Fleming have a covid vaccination, and what is the evidence for this?]
+2023-05-27 10:11:12,443 - INFO - 
+2023-05-27 10:11:12,443 - INFO - retrieving embedding for query...
+2023-05-27 10:11:24,616 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:11:24,631 - INFO - embedding:[-0.3462660312652588, 0.19603502750396729, 0.4822136461734772, 0.55462247133255,  ...]
+2023-05-27 10:11:24,631 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-27 10:11:24,678 - INFO - retrieved <built-in method count of list object at 0x000002512DBC2840> results
+2023-05-27 10:11:24,678 - INFO - id:2
+2023-05-27 10:11:24,694 - INFO - score:0.42130408
+2023-05-27 10:11:24,694 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021'}
+2023-05-27 10:11:24,694 - INFO - 
+
+2023-05-27 10:11:24,694 - INFO - id:1
+2023-05-27 10:11:24,694 - INFO - score:0.3715799
+2023-05-27 10:11:24,694 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided.'}
+2023-05-27 10:11:24,694 - INFO - 
+
+2023-05-27 10:12:35,788 - INFO - 
+2023-05-27 10:12:35,788 - INFO - ###################################
+2023-05-27 10:12:35,789 - INFO - 
+2023-05-27 10:12:35,789 - INFO - AI control service started
+2023-05-27 10:12:35,789 - INFO - 
+2023-05-27 10:12:35,789 - INFO - ###################################
+2023-05-27 10:12:35,789 - INFO - 
+2023-05-27 10:12:35,790 - INFO - Loaded environment variables:
+2023-05-27 10:12:35,790 - INFO - LLM_QUERY_URL:[http://localhost:8001/query]
+2023-05-27 10:12:35,790 - INFO - LLM_QUERY_ASYNC_URL:[http://localhost:8001/query-async]
+2023-05-27 10:12:35,791 - INFO - LLM_EMBEDDING_URL:[http://localhost:8000/get-embedding]
+2023-05-27 10:12:35,791 - INFO - QDRANT_URL:[http://localhost:6333]
+2023-05-27 10:12:35,791 - INFO - connecting to qdrant db at [http://localhost:6333] ...
+2023-05-27 10:12:35,801 - INFO - succesfully connected to vector DB
+2023-05-27 10:12:35,801 - INFO - connecting to collection [collection1]...
+2023-05-27 10:12:35,820 - INFO - collection status:
+2023-05-27 10:12:35,820 - INFO -    status:CollectionStatus.GREEN
+2023-05-27 10:12:35,821 - INFO -    points_count:2
+2023-05-27 10:12:35,821 - INFO -    vectors_count:2
+2023-05-27 10:12:35,821 - INFO -    segments_count:8
+2023-05-27 10:12:35,821 - INFO -    payload_schema:{}
+2023-05-27 10:12:45,002 - INFO - /query-docs-async API called
+2023-05-27 10:12:45,002 - INFO - Query:[Does William Fleming have a covid vaccination, and what is the evidence for this?]
+2023-05-27 10:12:45,002 - INFO - 
+2023-05-27 10:12:45,002 - INFO - retrieving embedding for query...
+2023-05-27 10:12:53,629 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:12:53,629 - INFO - embedding:[-0.3462660312652588, 0.19603502750396729, 0.4822136461734772, 0.55462247133255,  ...]
+2023-05-27 10:12:53,629 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-27 10:12:53,659 - INFO - retrieved <built-in method count of list object at 0x000002168B0F89C0> results
+2023-05-27 10:12:53,659 - INFO - id:2
+2023-05-27 10:12:53,659 - INFO - score:0.42130408
+2023-05-27 10:12:53,659 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021'}
+2023-05-27 10:12:53,659 - INFO - 
+
+2023-05-27 10:12:53,659 - INFO - id:1
+2023-05-27 10:12:53,659 - INFO - score:0.3715799
+2023-05-27 10:12:53,659 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided.'}
+2023-05-27 10:12:53,659 - INFO - 
+
+2023-05-27 10:13:40,202 - INFO - 
+2023-05-27 10:13:40,202 - INFO - ###################################
+2023-05-27 10:13:40,202 - INFO - 
+2023-05-27 10:13:40,203 - INFO - AI control service started
+2023-05-27 10:13:40,203 - INFO - 
+2023-05-27 10:13:40,203 - INFO - ###################################
+2023-05-27 10:13:40,203 - INFO - 
+2023-05-27 10:13:40,203 - INFO - Loaded environment variables:
+2023-05-27 10:13:40,204 - INFO - LLM_QUERY_URL:[http://localhost:8001/query]
+2023-05-27 10:13:40,204 - INFO - LLM_QUERY_ASYNC_URL:[http://localhost:8001/query-async]
+2023-05-27 10:13:40,204 - INFO - LLM_EMBEDDING_URL:[http://localhost:8000/get-embedding]
+2023-05-27 10:13:40,204 - INFO - QDRANT_URL:[http://localhost:6333]
+2023-05-27 10:13:40,205 - INFO - connecting to qdrant db at [http://localhost:6333] ...
+2023-05-27 10:13:40,212 - INFO - succesfully connected to vector DB
+2023-05-27 10:13:40,213 - INFO - connecting to collection [collection1]...
+2023-05-27 10:13:40,224 - INFO - collection status:
+2023-05-27 10:13:40,225 - INFO -    status:CollectionStatus.GREEN
+2023-05-27 10:13:40,225 - INFO -    points_count:2
+2023-05-27 10:13:40,225 - INFO -    vectors_count:2
+2023-05-27 10:13:40,226 - INFO -    segments_count:8
+2023-05-27 10:13:40,226 - INFO -    payload_schema:{}
+2023-05-27 10:13:43,068 - INFO - /query-docs API called
+2023-05-27 10:13:43,068 - INFO - Query:[Does William Fleming have a covid vaccination, and what is the evidence for this?]
+2023-05-27 10:13:43,068 - INFO - 
+2023-05-27 10:13:43,068 - INFO - retrieving embedding for query...
+2023-05-27 10:13:51,845 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:13:51,849 - INFO - embedding:[-0.3462660312652588, 0.19603502750396729, 0.4822136461734772, 0.55462247133255,  ...]
+2023-05-27 10:13:51,849 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-27 10:13:51,894 - INFO - retrieved <built-in method count of list object at 0x00000140008DDA80> results
+2023-05-27 10:13:51,894 - INFO - id:2
+2023-05-27 10:13:51,894 - INFO - score:0.42130408
+2023-05-27 10:13:51,894 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021'}
+2023-05-27 10:13:51,894 - INFO - 
+
+2023-05-27 10:13:51,894 - INFO - id:1
+2023-05-27 10:13:51,894 - INFO - score:0.3715799
+2023-05-27 10:13:51,894 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided.'}
+2023-05-27 10:13:51,894 - INFO - 
+
+2023-05-27 10:13:51,894 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a covid vaccination, and what is the evidence for this? Answer:]
+2023-05-27 10:13:51,894 - INFO - calling llm-query to get answer...
+2023-05-27 10:16:08,807 - INFO - question:[Does William Fleming have a covid vaccination, and what is the evidence for this?]
+2023-05-27 10:16:08,807 - INFO - prompt:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a covid vaccination, and what is the evidence for this? Answer:]
+2023-05-27 10:16:08,807 - INFO - answer:[ Yes, William Fleming has received all required COVID-19 vaccinations. The evidence for this is that he has a valid COVID-19 immunisation certificate, which shows his vaccination details as reported to the Australian Immunisation Register by his vaccination provider.]
+2023-05-27 10:16:08,807 - INFO - id:[cmpl-2f7b25ab-98c0-420f-9124-ab028334a11b]
+2023-05-27 10:16:08,807 - INFO - object:[text_completion]
+2023-05-27 10:16:08,807 - INFO - created:[1685146433]
+2023-05-27 10:16:08,822 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-27 10:16:08,822 - INFO - prompt_tokens:[539]
+2023-05-27 10:16:08,822 - INFO - completion_tokens:[539]
+2023-05-27 10:16:08,823 - INFO - total_tokens:[600]
+2023-05-27 10:16:55,480 - INFO - /query-docs-async API called
+2023-05-27 10:16:55,480 - INFO - Query:[Does William Fleming have a covid vaccination, and what is the evidence for this? Please list the source file name containing the evidence.]
+2023-05-27 10:16:55,481 - INFO - 
+2023-05-27 10:16:55,481 - INFO - retrieving embedding for query...
+2023-05-27 10:17:05,838 - INFO - retrieved embedding vector consisting of 5120 numbers
+2023-05-27 10:17:05,853 - INFO - embedding:[-0.6728728413581848, -0.4873311519622803, 0.2726825177669525, 0.0410722866654396 ...]
+2023-05-27 10:17:05,853 - INFO - retrieving matching chunks from Vector DB using a similarity search...
+2023-05-27 10:17:05,888 - INFO - retrieved <built-in method count of list object at 0x00000140195D07C0> results
+2023-05-27 10:17:05,888 - INFO - id:2
+2023-05-27 10:17:05,888 - INFO - score:0.68510634
+2023-05-27 10:17:05,888 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021'}
+2023-05-27 10:17:05,888 - INFO - 
+
+2023-05-27 10:17:05,888 - INFO - id:1
+2023-05-27 10:17:05,888 - INFO - score:0.3898554
+2023-05-27 10:17:05,888 - INFO - payload:{'source_filename': 'WilliamCovidCert.pdf', 'text': 'COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided.'}
+2023-05-27 10:17:05,888 - INFO - 
+
+2023-05-27 10:17:05,888 - DEBUG - created prompt with context information:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a covid vaccination, and what is the evidence for this? Please list the source file name containing the evidence. Answer:]
+2023-05-27 10:17:05,888 - INFO - calling llm-query to get answer...
+2023-05-27 10:17:07,911 - INFO - async query successful

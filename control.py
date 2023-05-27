@@ -17,11 +17,11 @@ import logging
 from logging.handlers import RotatingFileHandler
 import sys
 import os 
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct, CollectionInfo, ScoredPoint
+
+from db_wrapper import VectorDB
 
 # constants
-COLLECTION_NAME = "collection1"
+
 EMBED_VECTOR_SIZE = 5120
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -62,20 +62,8 @@ logger.info("LLM_QUERY_ASYNC_URL:%s", "[" + LLM_QUERY_ASYNC_URL + "]")
 logger.info("LLM_EMBEDDING_URL:%s", "[" + LLM_EMBEDDING_URL + "]")
 logger.info("QDRANT_URL:%s", "[" + QDRANT_URL + "]")
 
-# connect to Qdrant vector database
-logger.info("connecting to qdrant db at [" + QDRANT_URL + "] ...")
-vectorDB = QdrantClient(QDRANT_URL)
-logger.info("succesfully connected to vector DB")
-   
-# log collection status
-logger.info("connecting to collection [" + COLLECTION_NAME + "]...")
-collectionInfo = vectorDB.get_collection(collection_name=COLLECTION_NAME) 
-logger.info("collection status:")
-logger.info("   status:%s", str(collectionInfo.status))
-logger.info("   points_count:%s", str(collectionInfo.points_count))
-logger.info("   vectors_count:%s", str(collectionInfo.vectors_count))
-logger.info("   segments_count:%s", str(collectionInfo.segments_count))    
-logger.info("   payload_schema:%s", str(collectionInfo.payload_schema))
+# connect to Vector DB and log collection status
+vectorDB = VectorDB(QDRANT_URL, logger)   
 
 # create the FastAPI instance
 app = FastAPI()    
@@ -177,47 +165,6 @@ def file_exists_in_vectorDB(source_filename):
 
     return(False)
 
-# persist chunk to vector db - Qdrant
-def persist_to_vectorDB(idx, source_filename, text_chunk, embedding):  
-    vectorDB.upsert(
-    collection_name=COLLECTION_NAME,
-    points=[
-        PointStruct(
-            id=idx, 
-            vector=embedding,
-            payload={"text": text_chunk, "source_filename" : source_filename}
-        )        
-    ]
-    )
-    return()
-
-# perform vector DB similarity search
-def retrieve_matches_from_vectorDB(embedding):
-    # perform search, return up to 5 results
-    search_result = vectorDB.search(
-            collection_name=COLLECTION_NAME,
-            query_vector=embedding, 
-            limit=5,
-            with_payload=True,
-            with_vectors=False
-            )    
-
-    # log search results
-    logger.info("retrieved " + str(search_result.count) + " results")
-    for result in search_result:
-        logger.info("id:" + str(result.id))
-        logger.info("score:" + str(result.score))
-        logger.info("payload:" + str(result.payload))
-        logger.info("\n")
-                 
-    return search_result
-
-# join search result payload together to form a context string
-def CreateContextFromSearchResults(search_results):
-    context=""
-    for result in search_results:
-        context += json.dumps(result.payload) + " "   
-    return context
 
 # helper function to trim the length of a chunk, and remove any newline characters to it prints better
 def trimChunk(chunk, max_length):
@@ -286,7 +233,7 @@ async def ingest_pdf(file: UploadFile = File(...)):
         
             # persist chunk + embedding to vector DB & log result
             logger.info("persisting text chunk and embedding to vector db...")
-            persist_to_vectorDB(i, filename, chunk, embedding)
+            vectorDB.persist_chunk(i, filename, chunk, embedding)
             logger.info("persisted chunk to vector DB")
             logger.info("")
                         
@@ -311,10 +258,12 @@ async def query(request: LLMRequest):
 
     # retrieve matching chunks from vector DB
     logger.info("retrieving matching chunks from Vector DB using a similarity search...")
-    search_results=retrieve_matches_from_vectorDB(embedding)
+    search_results=vectorDB.retrieve_matches(embedding)
     
+    # todo - only continue if search found results
+
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
-    context = CreateContextFromSearchResults(search_results)
+    context = vectorDB.convert_to_string(search_results)
     prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
     prompt += "Context:" + context + " "            
     prompt += "Question:" + request.text + " "
@@ -373,10 +322,12 @@ async def query(request: LLMRequest):
 
     # retrieve matching chunks from vector DB
     logger.info("retrieving matching chunks from Vector DB using a similarity search...")
-    search_results=retrieve_matches_from_vectorDB(embedding)    
+    search_results=vectorDB.retrieve_matches(embedding)    
+
+    # todo - only continue if search found results
 
     # create prompt for LLM - join query with the context information retrieved from the Vector DB
-    context = CreateContextFromSearchResults(search_results)
+    context = vectorDB.convert_to_string(search_results)
     prompt = "Using the provided context, answer the question. Assume everything in the context is true. "
     prompt += "Context:" + context + " "            
     prompt += "Question:" + request.text + " "

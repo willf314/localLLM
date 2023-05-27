@@ -13,3 +13,6 @@ __pycache__/control.cpython-39.pyc
 __pycache__/control.cpython-39.pyc
 __pycache__/llm-query.cpython-39.pyc
 GPT4All-13B-snoozy.ggml.q4_2.bin
+control.log
+llm-query.log
+*.log

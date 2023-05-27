@@ -2507,3 +2507,128 @@
 2023-05-26 19:49:57,893 - DEBUG - streaming data:[ certificate]
 2023-05-26 19:49:58,245 - DEBUG - streaming data:[.]
 2023-05-26 19:49:58,572 - DEBUG - streaming data:[]
+2023-05-27 10:04:22,100 - INFO - 
+2023-05-27 10:04:22,100 - INFO - ###################################
+2023-05-27 10:04:22,100 - INFO - 
+2023-05-27 10:04:22,100 - INFO - Starting llm-query
+2023-05-27 10:04:22,100 - INFO - 
+2023-05-27 10:04:22,100 - INFO - ###################################
+2023-05-27 10:04:22,100 - INFO - 
+2023-05-27 10:04:22,100 - INFO - Loading model...
+2023-05-27 10:04:23,948 - INFO - Model loaded
+2023-05-27 10:08:08,831 - INFO - 
+2023-05-27 10:08:08,831 - INFO - ###################################
+2023-05-27 10:08:08,831 - INFO - 
+2023-05-27 10:08:08,831 - INFO - Starting llm-query
+2023-05-27 10:08:08,831 - INFO - 
+2023-05-27 10:08:08,831 - INFO - ###################################
+2023-05-27 10:08:08,831 - INFO - 
+2023-05-27 10:08:08,831 - INFO - Loading model...
+2023-05-27 10:08:10,464 - INFO - Model loaded
+2023-05-27 10:12:33,931 - INFO - 
+2023-05-27 10:12:33,931 - INFO - ###################################
+2023-05-27 10:12:33,931 - INFO - 
+2023-05-27 10:12:33,932 - INFO - Starting llm-query
+2023-05-27 10:12:33,932 - INFO - 
+2023-05-27 10:12:33,932 - INFO - ###################################
+2023-05-27 10:12:33,932 - INFO - 
+2023-05-27 10:12:33,933 - INFO - Loading model...
+2023-05-27 10:12:34,380 - INFO - Model loaded
+2023-05-27 10:13:38,605 - INFO - 
+2023-05-27 10:13:38,605 - INFO - ###################################
+2023-05-27 10:13:38,606 - INFO - 
+2023-05-27 10:13:38,606 - INFO - Starting llm-query
+2023-05-27 10:13:38,606 - INFO - 
+2023-05-27 10:13:38,607 - INFO - ###################################
+2023-05-27 10:13:38,607 - INFO - 
+2023-05-27 10:13:38,607 - INFO - Loading model...
+2023-05-27 10:13:38,994 - INFO - Model loaded
+2023-05-27 10:13:53,910 - INFO - /query API called
+2023-05-27 10:13:53,910 - INFO - Query:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a covid vaccination, and what is the evidence for this? Answer:]
+2023-05-27 10:13:53,910 - INFO - 
+2023-05-27 10:16:08,807 - INFO - llm response:[ Yes, William Fleming has received all required COVID-19 vaccinations. The evidence for this is that he has a valid COVID-19 immunisation certificate, which shows his vaccination details as reported to the Australian Immunisation Register by his vaccination provider.]
+2023-05-27 10:16:08,807 - INFO - id:[cmpl-2f7b25ab-98c0-420f-9124-ab028334a11b]
+2023-05-27 10:16:08,807 - INFO - model:[GPT4All-13B-snoozy.ggml.q4_2.bin]
+2023-05-27 10:16:08,807 - INFO - prompt_tokens:[539]
+2023-05-27 10:16:08,807 - INFO - completion_tokens:[539]
+2023-05-27 10:16:08,807 - INFO - prompt_tokens:[600]
+2023-05-27 10:17:07,911 - INFO - /query-async API called
+2023-05-27 10:17:07,911 - INFO - Query:[Using the provided context, answer the question. Assume everything in the context is true. Context:{"source_filename": "WilliamCovidCert.pdf", "text": "The data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided. \nIf any of the immunisation details shown on the certificate are not correct, please ask your vaccination provider to \nprovide the correct details by calling us on 1800 653 809 (call charges may apply). \nIf you have any questions about this certificate please call the Australian Immunisation Register on 1800 653 809 \n(call charges may apply).\nVersion\nv2021.07.10Date generated\n16 Sep 2021"} {"source_filename": "WilliamCovidCert.pdf", "text": "COVID-19 digital certificate\nThis individual has received all required COVID-19 vaccinations.\nName\nWILLIAM D FLEMINGDate of birth\n08 Aug 1976\nIndividual Healthcare Identifier (IHI)\n8003 6012 1429 4717Document number\n1000 1778 3446\nValid from\n11 Sep 2021\nVaccinations Dates received\nPfizer Comirnaty 18 Jul 2021, 11 Sep 2021\nDisclaimer\nThis certificate shows your COVID-19 immunisation details as reported to the Australian Immunisation Register \nby your vaccination provider. It is available because you have received all required COVID-19 vaccinations \napproved for use in Australia. The valid from date reflects the date from which you received all required \nCOVID-19 vaccinations. \nEvery effort is made to ensure that the information contained on the Australian Immunisation Register is correct. \nThe data is based on information provided by vaccination providers and the accuracy of data is dependent on the \nquality and timeliness of information provided."}  Question:Does William Fleming have a covid vaccination, and what is the evidence for this? Please list the source file name containing the evidence. Answer:]
+2023-05-27 10:17:08,224 - DEBUG - /stream-answer API called
+2023-05-27 10:17:11,203 - DEBUG - streaming data:[Yes]
+2023-05-27 10:17:11,544 - DEBUG - streaming data:[,]
+2023-05-27 10:17:11,876 - DEBUG - streaming data:[ based]
+2023-05-27 10:17:12,211 - DEBUG - streaming data:[ on]
+2023-05-27 10:17:12,526 - DEBUG - streaming data:[ the]
+2023-05-27 10:17:12,846 - DEBUG - streaming data:[ digital]
+2023-05-27 10:17:13,177 - DEBUG - streaming data:[ certificate]
+2023-05-27 10:17:13,495 - DEBUG - streaming data:[ in]
+2023-05-27 10:17:13,827 - DEBUG - streaming data:[ the]
+2023-05-27 10:17:14,159 - DEBUG - streaming data:[ source]
+2023-05-27 10:17:14,476 - DEBUG - streaming data:[ file]
+2023-05-27 10:17:14,813 - DEBUG - streaming data:[ named]
+2023-05-27 10:17:15,162 - DEBUG - streaming data:[ "]
+2023-05-27 10:17:15,495 - DEBUG - streaming data:[Will]
+2023-05-27 10:17:15,829 - DEBUG - streaming data:[iam]
+2023-05-27 10:17:16,163 - DEBUG - streaming data:[C]
+2023-05-27 10:17:16,498 - DEBUG - streaming data:[ov]
+2023-05-27 10:17:16,829 - DEBUG - streaming data:[id]
+2023-05-27 10:17:17,164 - DEBUG - streaming data:[Cert]
+2023-05-27 10:17:17,497 - DEBUG - streaming data:[.]
+2023-05-27 10:17:17,830 - DEBUG - streaming data:[pdf]
+2023-05-27 10:17:18,164 - DEBUG - streaming data:[",]
+2023-05-27 10:17:18,499 - DEBUG - streaming data:[ it]
+2023-05-27 10:17:18,832 - DEBUG - streaming data:[ can]
+2023-05-27 10:17:19,165 - DEBUG - streaming data:[ be]
+2023-05-27 10:17:19,500 - DEBUG - streaming data:[ concluded]
+2023-05-27 10:17:19,832 - DEBUG - streaming data:[ that]
+2023-05-27 10:17:20,183 - DEBUG - streaming data:[ William]
+2023-05-27 10:17:20,556 - DEBUG - streaming data:[ F]
+2023-05-27 10:17:20,914 - DEBUG - streaming data:[lem]
+2023-05-27 10:17:21,281 - DEBUG - streaming data:[ing]
+2023-05-27 10:17:21,619 - DEBUG - streaming data:[ has]
+2023-05-27 10:17:21,949 - DEBUG - streaming data:[ received]
+2023-05-27 10:17:22,300 - DEBUG - streaming data:[ all]
+2023-05-27 10:17:22,635 - DEBUG - streaming data:[ required]
+2023-05-27 10:17:22,959 - DEBUG - streaming data:[ COVID]
+2023-05-27 10:17:23,285 - DEBUG - streaming data:[-]
+2023-05-27 10:17:23,634 - DEBUG - streaming data:[1]
+2023-05-27 10:17:23,986 - DEBUG - streaming data:[9]
+2023-05-27 10:17:24,320 - DEBUG - streaming data:[ v]
+2023-05-27 10:17:24,685 - DEBUG - streaming data:[acc]
+2023-05-27 10:17:25,021 - DEBUG - streaming data:[in]
+2023-05-27 10:17:25,385 - DEBUG - streaming data:[ations]
+2023-05-27 10:17:25,720 - DEBUG - streaming data:[.]
+2023-05-27 10:17:26,053 - DEBUG - streaming data:[ The]
+2023-05-27 10:17:26,389 - DEBUG - streaming data:[ evidence]
+2023-05-27 10:17:26,721 - DEBUG - streaming data:[ for]
+2023-05-27 10:17:27,071 - DEBUG - streaming data:[ this]
+2023-05-27 10:17:27,390 - DEBUG - streaming data:[ is]
+2023-05-27 10:17:27,739 - DEBUG - streaming data:[ the]
+2023-05-27 10:17:28,057 - DEBUG - streaming data:[ information]
+2023-05-27 10:17:28,391 - DEBUG - streaming data:[ provided]
+2023-05-27 10:17:28,739 - DEBUG - streaming data:[ by]
+2023-05-27 10:17:29,089 - DEBUG - streaming data:[ his]
+2023-05-27 10:17:29,423 - DEBUG - streaming data:[ v]
+2023-05-27 10:17:29,764 - DEBUG - streaming data:[acc]
+2023-05-27 10:17:30,108 - DEBUG - streaming data:[ination]
+2023-05-27 10:17:30,441 - DEBUG - streaming data:[ provider]
+2023-05-27 10:17:30,791 - DEBUG - streaming data:[ to]
+2023-05-27 10:17:31,130 - DEBUG - streaming data:[ the]
+2023-05-27 10:17:31,442 - DEBUG - streaming data:[ Australian]
+2023-05-27 10:17:31,782 - DEBUG - streaming data:[ Im]
+2023-05-27 10:17:32,127 - DEBUG - streaming data:[mun]
+2023-05-27 10:17:32,458 - DEBUG - streaming data:[isation]
+2023-05-27 10:17:32,795 - DEBUG - streaming data:[ Register]
+2023-05-27 10:17:33,127 - DEBUG - streaming data:[,]
+2023-05-27 10:17:33,471 - DEBUG - streaming data:[ which]
+2023-05-27 10:17:33,808 - DEBUG - streaming data:[ was]
+2023-05-27 10:17:34,129 - DEBUG - streaming data:[ accessed]
+2023-05-27 10:17:34,473 - DEBUG - streaming data:[ and]
+2023-05-27 10:17:34,780 - DEBUG - streaming data:[ displayed]
+2023-05-27 10:17:35,113 - DEBUG - streaming data:[ on]
+2023-05-27 10:17:35,454 - DEBUG - streaming data:[ the]
+2023-05-27 10:17:35,782 - DEBUG - streaming data:[ digital]
+2023-05-27 10:17:36,113 - DEBUG - streaming data:[ certificate]
+2023-05-27 10:17:36,462 - DEBUG - streaming data:[.]
+2023-05-27 10:17:36,785 - DEBUG - streaming data:[]

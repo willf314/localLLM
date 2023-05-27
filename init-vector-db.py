@@ -16,9 +16,9 @@ QDRANT_URL = os.environ.get("QDRANT_URL")
 if __name__ == '__main__':
 
     # connect to Qdrant 
+    print("connecting to Qdrant db [" + QDRANT_URL+"] ...")
     qdrant_client = QdrantClient(QDRANT_URL)
-    print("connected to Qdrant db [" + QDRANT_URL+"]")
-
+    
     # recreate collection. This will delete any existing collection with the same name
     qdrant_client.recreate_collection(
     collection_name=COLLECTION_NAME,
@@ -26,6 +26,7 @@ if __name__ == '__main__':
     )  
 
     # inform success
+    print("connected to Qdrant db [" + QDRANT_URL+"]")
     print("created collection [" + COLLECTION_NAME + "] with Vector size:" + str(EMBED_VECTOR_SIZE))
     print("initialisation complete")
     
