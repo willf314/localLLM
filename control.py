@@ -160,13 +160,7 @@ def query_llm_async(prompt):
         logger.error("Request failed with status code: %d", response.status_code)
         return("async query failed")
 
-# todo - add code to call VectorDB service to check if chunks for this file already exist
-def file_exists_in_vectorDB(source_filename):
-
-    return(False)
-
-
-# helper function to trim the length of a chunk, and remove any newline characters to it prints better
+# helper function to trim the length of a chunk, and remove any newline characters so it prints better
 def trimChunk(chunk, max_length):
     chunk = chunk.replace('\n', ' ').replace('\r', ' ')
     if len(chunk) <= max_length:
@@ -191,13 +185,13 @@ async def ingest_pdf(file: UploadFile = File(...)):
     
     # check if file has already been uploaded to the VectorDB
     filename = file.filename
-    logger.info("checking if file [" + filename + "] exists in VectorDB...")        
-    if file_exists_in_vectorDB(filename):
-        logger.error("Error. File already exists in VectorDB")
-        return {"message" : "Error. File already exists in VectorDB"}
+    logger.info("checking if file [" + filename + "] exists in vector database...")        
+    if vectorDB.file_exists(filename):
+        logger.error("operation aborted, chunks of this file already exist in vector database")
+        return {"message" : "operation aborted, chunks of this file already exist in vector database"}
     else:              
         # convert PDF file to text        
-        logger.info("confirmed file does not exist in VectorDB")
+        logger.info("confirmed file does not exist in vector database")
         logger.info("converting PDF to text...")
         raw_text = extract_text_from_pdf(io.BytesIO(await file.read()))
         logger.info("converted PDF to text. Text length:" + str(len(raw_text)))        
@@ -232,10 +226,8 @@ async def ingest_pdf(file: UploadFile = File(...)):
             logger.info("embedding:" + "[" + trimEmbedding(embedding, 80) + "]")        
         
             # persist chunk + embedding to vector DB & log result
-            logger.info("persisting text chunk and embedding to vector db...")
-            vectorDB.persist_chunk(i, filename, chunk, embedding)
-            logger.info("persisted chunk to vector DB")
-            logger.info("")
+            logger.info("persisting text chunk and embedding to vector database...")
+            vectorDB.persist_chunk(filename, chunk, embedding)                        
                         
         # return result to client    
         logger.info("completed document ingestion")
