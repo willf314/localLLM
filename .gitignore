@@ -16,3 +16,9 @@ GPT4All-13B-snoozy.ggml.q4_2.bin
 control.log
 llm-query.log
 *.log
+llm-embedding.log.1
+llm-embedding.log.2
+llm-embedding.log.3
+llm-embedding.log.4
+llm-embedding.log.5
+__pycache__/llm-embedding.cpython-39.pyc

@@ -15,8 +15,6 @@ Each service produces a log file, same content is also streamed to stdout:
 2.llm-embedding.log
 3.llm-query.log
 
-There is no config file
-
 Install requirements:
 1.pip install fastapi
 2.pip install uvicorn[standard]
@@ -24,10 +22,28 @@ Install requirements:
 4.run uvicorn main:app --reload to start the server process
 5.pip install ayncio
 6.pip install sse-starlette
-7.Install llama cpp + the python library
+7.pip install llama cpp   (check if a separate install required as well)
+8.for embedding LLM: pip install InstructorEmbedding
+9. langchain
 
-The LLM can be sourced from:
+Qdrant vector DB must be setup separately. Once the db is started, update startAI.bat with the db URL and port to connect on 
+
+The query LLM model can be found here:
 https://huggingface.co/TheBloke/GPT4All-13B-snoozy-GGML/tree/previous_llama
+
+Download this file and put it in the working directory alongside python scripts.
+
+The embedding LLM:
+https://huggingface.co/hkunlp/instructor-xl
+
+use this command to download a local instance:
+git lfs clone https://huggingface.co/hkunlp/instructor-xl
+
+Then set the EMBEDDING_MODEL_PATH environment variable to point at the download folder location. 
+
+Note: use forward slashes for embedding model path. It failed to load on windows, using backslashes.
+
+The alternative is to use the default hugging face code to automatically download. This code is included in the llm-embedding python file but commented out. It would automatically check for updates and download new versions to the ./cache location everytime the llm-embedding service is started. This could lead to a substantial delay in service start up time.
 
 Start up:
 

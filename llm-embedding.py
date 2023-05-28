@@ -2,7 +2,8 @@
 
 import json
 import copy 
-from llama_cpp import Llama
+#from llama_cpp import Llama  # swapping this out for the instructor model below
+from InstructorEmbedding import INSTRUCTOR
 import asyncio
 from fastapi import FastAPI, Request
 from sse_starlette import EventSourceResponse
@@ -11,6 +12,9 @@ from pydantic import BaseModel
 import logging
 from logging.handlers import RotatingFileHandler
 import sys
+import os 
+from typing import List
+import numpy as np
 
 # setup logging
 logger = logging.getLogger(__name__)
@@ -32,10 +36,13 @@ logger.info("")
 logger.info("###################################")
 logger.info("")
 
-logger.info("Loading model...")
-llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=True, n_ctx = 2048)   
+# load environment variables
+EMBEDDING_MODEL_PATH = os.environ.get("EMBEDDING_MODEL_PATH")
 
 
+logger.info("Loading model from " + EMBEDDING_MODEL_PATH + "...")
+#llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=True, n_ctx = 2048)   
+llm = INSTRUCTOR(EMBEDDING_MODEL_PATH)
 logger.info("Model loaded")
 
 app = FastAPI()
@@ -53,49 +60,6 @@ app.add_middleware(
 #define the request body schema
 class LLMRequest(BaseModel):
     text: str
-
-# question/answer endpoint - synchronous - blocks until LLM returns full result
-@app.post("/query")
-async def query(request: LLMRequest):
-    
-    logger.info("/query API called")
-    logger.info("Query:[%s]", request.text)
-    logger.info("")
-
-    #call LLM
-    stream = llm(        
-        #f"Question:{request.text} Answer:",
-        request.text,
-        max_tokens=2048,
-        stop=[ " Q:", " Question:"],
-        echo=False,
-        )
-    
-    #retrieve answer + supporting data from the LLM result
-    result = copy.deepcopy(stream)  
-    text = result["choices"][0]["text"]
-    id = result["id"]
-    object = result["object"]
-    created = result["created"]
-    modelName = result["model"]
-    prompt_tokens = result["usage"]["prompt_tokens"]
-    completion_tokens = result["usage"]["completion_tokens"]
-    total_tokens = result["usage"]["total_tokens"]
-
-    #log results 
-    logger.info("llm response:[%s]",text)
-    logger.info("id:[" + id + "]")
-    logger.info("model:[" + modelName + "]")
-    logger.info("prompt_tokens:[" + str(prompt_tokens) + "]")
-    logger.info("completion_tokens:[" + str(prompt_tokens) + "]")
-    logger.info("prompt_tokens:[" + str(total_tokens) + "]")
-    
-    #return result to client
-    return {"question" : request.text , "answer" : text, "id" : id, "object" : object,
-           "created" : created, "modelName" : modelName, 
-           "prompt_tokens" : prompt_tokens, "completion_tokens" : completion_tokens,
-           "total_tokens" : total_tokens}
-
 
 # helper function to trim the length of a chunk, and remove any newline characters to it prints better
 def trimChunk(chunk, max_length):
@@ -129,60 +93,19 @@ async def get_embedding(request: LLMRequest):
     logger.info("retreiving embedding...")
     
     # retrieve embedding and log individual numbers
-    embedding = llm.embed(request.text)        
+    #embedding = llm.embed(request.text)        # use this code for llama cpp models
+    embedding = llm.encode(request.text)         # use this code for the hugging face instructor XL model
     enumerateEmbedding(embedding)
-
+   
     #log result    
     logger.info("retrieved embedding vector consisting of " + str(len(embedding)) + " numbers")    
     logger.info("completed embedding request")
     logger.info("")
     
     #return result
-    return {"embedding" : embedding}
+    embedding_list = np.array(embedding).tolist()
+    return {"embedding" : embedding_list}
 
-
-# question/answer endpoint - asynchronous 
-
-#global stream
-stream = None
-
-#global function
-async def async_generator():
-        for item in stream:
-            yield item
-
-@app.post("/query-async")
-async def query_async(request: LLMRequest):                
-    #call LLM    
-    logger.info("/query-async API called")
-    logger.info("Query:[%s]",request.text)
-    global stream
-    stream = llm(
-        #f"Question:{request.text} Answer:",
-        request.text,
-        max_tokens=2048,
-        stop=[ " Q:", "Question:"],
-        stream=True,
-        )
-        
-    return {}
-
-# stream back LLM response to client
-@app.get("/stream-answer")
-async def stream_answer(request: Request):
-    global stream 
-    logger.debug("/stream-answer API called")        
-    async def server_sent_events():
-        async for item in async_generator():
-            if await request.is_disconnected():
-                break
-
-            result = copy.deepcopy(item)
-            text = result["choices"][0]["text"]                       
-            logger.debug("streaming data:[%s]",text)
-            yield {"data": text}
-            
-    return EventSourceResponse(server_sent_events())
 
 
 

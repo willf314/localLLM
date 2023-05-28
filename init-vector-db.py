@@ -8,7 +8,7 @@ from qdrant_client.models import Distance, VectorParams
 
 # constants
 COLLECTION_NAME = "collection1"
-EMBED_VECTOR_SIZE = 5120
+EMBED_VECTOR_SIZE = 768
 
 # load environment variable
 QDRANT_URL = os.environ.get("QDRANT_URL")
