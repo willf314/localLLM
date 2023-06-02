@@ -8,7 +8,7 @@ from qdrant_client.models import Distance, VectorParams, PointStruct, Collection
 
 # constants
 COLLECTION_NAME = "collection1"
-MAX_CHUNKS_TO_RETURN = 5
+MAX_CHUNKS_TO_RETURN = 3
 TRIM_CHUNK_LEN = 80                
 
 # helper function to trim the length of a chunk, and remove any newline characters for logging purposes
