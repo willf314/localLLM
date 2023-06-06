@@ -22,7 +22,7 @@ Install requirements:
 4.run uvicorn main:app --reload to start the server process
 5.pip install ayncio
 6.pip install sse-starlette
-7.pip install llama cpp   (check if a separate install required as well)
+7.pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
 8.for embedding LLM: pip install InstructorEmbedding
 9. langchain
 
