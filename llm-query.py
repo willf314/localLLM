@@ -11,6 +11,7 @@ from pydantic import BaseModel
 import logging
 from logging.handlers import RotatingFileHandler
 import sys
+import os
 
 # setup logging
 logger = logging.getLogger(__name__)
@@ -32,8 +33,13 @@ logger.info("")
 logger.info("###################################")
 logger.info("")
 
-logger.info("Loading model...")
-llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=False, n_ctx = 4096)   
+# load environment variables
+QUERY_MODEL_PATH = os.environ.get("QUERY_MODEL_PATH")
+
+logger.info("Loading model from " + QUERY_MODEL_PATH + "...")
+
+
+llm = Llama(QUERY_MODEL_PATH, embedding=False, n_ctx = 4096)   
 logger.info("Model loaded")
 
 app = FastAPI()

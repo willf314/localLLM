@@ -15,8 +15,8 @@ print("")
 print("######################################################")
 print("")
 
-print("Loading model GPT4All-13B-snoozy.ggml.q4_2.bin...")
-llm = Llama(model_path="GPT4All-13B-snoozy.ggml.q4_2.bin", embedding=False, n_ctx = 2048)
+print("Loading model Wizard-Vicuna-7B-Uncensored.ggmlv3.q4_1.bin...")
+llm = Llama(model_path="Wizard-Vicuna-7B-Uncensored.ggmlv3.q4_1.bin", embedding=False, n_ctx = 2048)
 print("Model loaded")
 
 while True:
