@@ -120,7 +120,6 @@ def extract_text_from_pdf(file):
         text += page.extract_text()
     return text
 
-
 # retreive embedding for a chunk of text
 def get_embedding(chunk):
     embedding = llm.encode(chunk)        
@@ -144,18 +143,7 @@ def trimEmbedding(embedding,max_length):
         trimmed_str = str_repr[:max_length] 
         return trimmed_str + " ..."
 
-
-import json
-import uuid
-from qdrant_client import QdrantClient
-from qdrant_client.http import models
-from qdrant_client.models import Distance, VectorParams, PointStruct, CollectionInfo, ScoredPoint, Record
-
-# constants
-COLLECTION_NAME = "collection1"
-MAX_CHUNKS_TO_RETURN = 3
-TRIM_CHUNK_LEN = 80                
-
+              
 # helper function to trim the length of a chunk, and remove any newline characters for logging purposes
 def trimChunk(chunk, max_length):
     chunk = chunk.replace('\n', ' ').replace('\r', ' ')
