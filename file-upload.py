@@ -142,7 +142,6 @@ def trimEmbedding(embedding,max_length):
     else:
         trimmed_str = str_repr[:max_length] 
         return trimmed_str + " ..."
-
               
 # helper function to trim the length of a chunk, and remove any newline characters for logging purposes
 def trimChunk(chunk, max_length):
